@@ -1,0 +1,27 @@
+.google-calendar {
+    border: solid 10px #0b0a0a;
+    width: 83vw; /* Use viewport width to fill the entire screen */
+    height: 100vh; /* Use viewport height to fill the entire screen */
+    margin: 0; /* Remove any margin */
+    position: fixed;
+    top: 0;
+    right: 0;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('../../../assets/images/liturgical-calendar.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+  }

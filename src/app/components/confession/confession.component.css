@@ -1,24 +1,47 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    min-height: 100vh;
-    background-image: url('../../../assets/images/confession.jpg');
-    background-size: cover;
-    background-position: 40% 30%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: -1;
-  }
-  h1 {
-    color: #ffffff; /* This is white, but you can choose any light color */
-    font-size: 100px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    font-family:Georgia, 'Times New Roman', Times, serif
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('../../../assets/images/confession.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top */
+  align-items: center;
+  text-align: center;
+  margin-top: 0; /* Remove any margin from the top */
+  color: black;
+}
+
+.header p{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top */
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 0; /* Remove any margin from the top */
+  color: rgb(248, 242, 242);
+}
+
+
+h1 {
+  color: #ffffff;
+  font-size: 50px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 0; /* Remove any default margin */
+}

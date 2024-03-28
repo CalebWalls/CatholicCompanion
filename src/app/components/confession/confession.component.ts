@@ -6,9 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./confession.component.css']
 })
 export class ConfessionComponent {
-  menuVisible = false;
 
-  toggleMenu() {
-    this.menuVisible = !this.menuVisible;
-  }
 }

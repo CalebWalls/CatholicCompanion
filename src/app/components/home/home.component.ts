@@ -9,8 +9,15 @@ import { Router } from '@angular/router'; // Import Router
 export class HomeComponent {
   title = 'Catholic Companion';
   menuVisible = false;
+  today = new Date();
 
-  constructor(private router: Router) { } // Inject Router
+  constructor(private router: Router) 
+  { 
+  } // Inject Router
+
+  ngOnInit() {
+    this.today = new Date();
+  }
 
   toggleMenu() {
     this.menuVisible = !this.menuVisible;
@@ -22,5 +29,8 @@ export class HomeComponent {
 
   navigateToConfession() { // New function
     this.router.navigate(['/confession']);
+  }
+  navigateToLiturgicalCalendar() { // New function
+    this.router.navigate(['/liturgical-calendar']);
   }
 }

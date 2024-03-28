@@ -1,20 +1,22 @@
-// liturgical-calendar.component.ts
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'; // Import Router
 
 @Component({
-  selector: 'app-liturgical-calendar',
-  templateUrl: './liturgical-calendar.component.html',
-  styleUrls: ['./liturgical-calendar.component.css']
+  selector: 'menu-button',
+  templateUrl: './menu-button.component.html',
+  styleUrls: ['./menu-button.component.css']
 })
-export class LiturgicalCalendarComponent {
+export class MenuButtonComponent {
+  title = 'Catholic Companion';
   menuVisible = false;
+  today = new Date();
 
   constructor(private router: Router) 
   { 
   } // Inject Router
 
   ngOnInit() {
+    this.today = new Date();
   }
 
   toggleMenu() {
@@ -31,5 +33,7 @@ export class LiturgicalCalendarComponent {
   navigateToLiturgicalCalendar() { // New function
     this.router.navigate(['/liturgical-calendar']);
   }
-  // You can add any properties or methods you need here
+  navigateHome() { // New function
+    this.router.navigate(['']);
+  }
 }

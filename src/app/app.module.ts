@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { LiturgicalCalendarComponent } from './components/liturgicalCalendar/liturgical-calendar.component';
+import { MenuButtonComponent } from './components/menuButton/menu-button.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { LiturgicalCalendarComponent } from './components/liturgicalCalendar/lit
   declarations: [
     AppComponent,
     HomeComponent,
+    MenuButtonComponent,
     LiturgicalCalendarComponent,
     ConfessionComponent
   ],

@@ -1,16 +1,11 @@
 <div class="container">
-  <div id="sidebar" class="sidebar" (click)="toggleMenu()">
-    <h2>Menu</h2>
-    <ul *ngIf="menuVisible">
-      <li><a href="#" (click)="openInNewWindow(); $event.preventDefault()">Daily Readings</a></li>
-      <li><a href="#" (click)="navigateToConfession(); $event.preventDefault()">Confession</a></li>
-    </ul>
-  </div>
+  <menu-button></menu-button>
   <div class="main-content">
     <div class="welcome-section">
       <h1>Welcome to {{title}}!</h1>
     </div>
     <div class="center-content">
+      <p>{{ today | date:'mediumDate' }} - Holy Thursday</p>
       <h2>Daily Gospel</h2>
       <div class="gospel-text">
         <p>Jesus came to Nazareth, where he had grown up,
@@ -32,7 +27,4 @@
           He said to them,
           “Today this Scripture passage is fulfilled in your hearing.”</p>
       </div>
-      <app-liturgical-calendar></app-liturgical-calendar> <!-- Add this line -->
-    </div>
-  </div>
 </div>
