@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  min-height: 100vh;
+  background-image: url('../../../assets/images/homescreen.jpg');
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #1289a9;
+  border: 5px solid black;
+  padding: 15px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: #fff;
+}
+
+.sidebar h2 {
+  cursor: pointer;
+}
+
+.sidebar h2:hover {
+  color: #ccc;
+}
+
+.sidebar ul li {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+  color: #ccc;
+  cursor: pointer;
+}
+
+.welcome-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 100px;
+  color: black;
+}
+
+.center-content h2 {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.center-content p {
+  font-size: 25px;
+  font-weight: bold;
+  max-width: 1000px;
+  font-family: 'Actor', sans-serif;
+}
+
+.gospel-text {
+  max-height: 200px;
+  overflow: auto;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 15px;
+}
+
+h1 {
+  color: #ffffff;
+  font-size: 50px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
