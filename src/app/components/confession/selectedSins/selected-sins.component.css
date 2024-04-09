@@ -4,7 +4,7 @@
     justify-content: flex-start; /* Align content to the top */
     align-items: flex-start; /* Align items to the left */
     min-height: 100vh;
-    background-image: url('/../../assets/images/confession.jpg');
+    background-color: rgb(125, 201, 239);
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;

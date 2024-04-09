@@ -17,11 +17,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { LiturgicalCalendarComponent } from './components/liturgicalCalendar/liturgical-calendar.component';
 import { MenuButtonComponent } from './components/menuButton/menu-button.component';
 import { SelectedSinsComponent } from './components/confession/selectedSins/selected-sins.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 @NgModule({
   providers: [
-    LoginService
+    LoginService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   declarations: [
     AppComponent,

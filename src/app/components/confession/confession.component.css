@@ -4,7 +4,7 @@
   justify-content: flex-start; /* Align content to the top */
   align-items: center;
   min-height: 100vh;
-  background-image: url('../../../assets/images/confession.jpg');
+  background-color: rgb(125, 201, 239);
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
@@ -22,8 +22,13 @@
   justify-content: flex-start; /* Align content to the top */
   align-items: center;
   text-align: center;
-  margin-top: 0; /* Remove any margin from the top */
+  margin-top: 100px; /* Remove any margin from the top */
   color: black;
+}
+
+.header label { 
+  color: rgb(241, 6, 6);
+  font-weight: bold;
 }
 
 h1 {
