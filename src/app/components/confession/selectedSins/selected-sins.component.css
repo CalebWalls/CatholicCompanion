@@ -34,5 +34,7 @@
   
   .sins-list {
     font-size: 24px; /* Increase font size */
+    max-height: 750px; /* Adjust as needed */
+    overflow-y: auto;
   }
   

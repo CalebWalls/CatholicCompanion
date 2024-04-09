@@ -3,20 +3,131 @@
 
   <div class="header">
     <h1>Confession</h1>
-    <p>Under Construction</p>
   </div>
 
-  <div class="sins-list">
-    <label>First Commandment</label>
-    <div *ngFor="let sin of sins.slice(0,2); let i = index">
-      <button (click)="onSinClick(i)">{{sin}}</button>
-      <input *ngIf="sinChecked[i]" type="checkbox" id="{{i}}" checked (change)="onSinChange(i, $event)">
-    </div>
+  <div class="sins-list-container">
+    <div class="sins-list">
+      <label>MORTAL</label>
+      <label>First Commandment</label>
+      <div *ngFor="let sin of sins.slice(0,18); let i = index">
+        <button (click)="onSinClick(i)">{{sin}}</button>
+        <input *ngIf="sinChecked[i]" type="checkbox" id="{{i}}" checked (change)="onSinChange(i, $event)">
+      </div>
 
-    <label>Second Commandment</label>
-    <div *ngFor="let sin of sins.slice(2); let i = index">
-      <button (click)="onSinClick(i+2)">{{sin}}</button>
-      <input *ngIf="sinChecked[i+2]" type="checkbox" id="{{i+2}}" checked (change)="onSinChange(i+2, $event)">
+      <label>Second Commandment</label>
+      <div *ngFor="let sin of sins.slice(18,26); let i = index">
+        <button (click)="onSinClick(i+18)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+18]" type="checkbox" id="{{i+18}}" checked (change)="onSinChange(i+18, $event)">
+      </div>
+
+      <label>Third Commandment</label>
+      <div *ngFor="let sin of sins.slice(26,32); let i = index">
+        <button (click)="onSinClick(i+26)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+26]" type="checkbox" id="{{i+26}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Fourth Commandment</label>
+      <div *ngFor="let sin of sins.slice(32,40); let i = index">
+        <button (click)="onSinClick(i+32)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+32]" type="checkbox" id="{{i+32}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Fith Commandment</label>
+      <div *ngFor="let sin of sins.slice(40,63); let i = index">
+        <button (click)="onSinClick(i+40)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+40]" type="checkbox" id="{{i+40}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Sixth Commandment</label>
+      <div *ngFor="let sin of sins.slice(63,90); let i = index">
+        <button (click)="onSinClick(i+63)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+63]" type="checkbox" id="{{i+63}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Seventh Commandment</label>
+      <div *ngFor="let sin of sins.slice(90,113); let i = index">
+        <button (click)="onSinClick(i+90)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+90]" type="checkbox" id="{{i+90}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Eighth Commandment</label>
+      <div *ngFor="let sin of sins.slice(113,118); let i = index">
+        <button (click)="onSinClick(i+113)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+113]" type="checkbox" id="{{i+113}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Ninth Commandment</label>
+      <div *ngFor="let sin of sins.slice(118,122); let i = index">
+        <button (click)="onSinClick(i+118)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+118]" type="checkbox" id="{{i+118}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Tenth Commandment</label>
+      <div *ngFor="let sin of sins.slice(122,124); let i = index">
+        <button (click)="onSinClick(i+122)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+122]" type="checkbox" id="{{i+122}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>VENIAL</label>
+      <label>First Commandment</label>
+      <div *ngFor="let sin of sins.slice(124,152); let i = index">
+        <button (click)="onSinClick(i+124)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+124]" type="checkbox" id="{{i+124}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Second Commandment</label>
+      <div *ngFor="let sin of sins.slice(152,159); let i = index">
+        <button (click)="onSinClick(i+152)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+152]" type="checkbox" id="{{i+152}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Thrid Commandment</label>
+      <div *ngFor="let sin of sins.slice(159,167); let i = index">
+        <button (click)="onSinClick(i+159)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+159]" type="checkbox" id="{{i+159}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Fourth Commandment</label>
+      <div *ngFor="let sin of sins.slice(167,191); let i = index">
+        <button (click)="onSinClick(i+167)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+167]" type="checkbox" id="{{i+167}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Fith Commandment</label>
+      <div *ngFor="let sin of sins.slice(191,229); let i = index">
+        <button (click)="onSinClick(i+191)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+191]" type="checkbox" id="{{i+192}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Sixth Commandment</label>
+      <div *ngFor="let sin of sins.slice(229,239); let i = index">
+        <button (click)="onSinClick(i+229)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+229]" type="checkbox" id="{{i+229}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Seventh Commandment</label>
+      <div *ngFor="let sin of sins.slice(239,247); let i = index">
+        <button (click)="onSinClick(i+239)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+239]" type="checkbox" id="{{i+239}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Eighth Commandment</label>
+      <div *ngFor="let sin of sins.slice(247,261); let i = index">
+        <button (click)="onSinClick(i+247)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+247]" type="checkbox" id="{{i+247}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Ninth Commandment</label>
+      <div *ngFor="let sin of sins.slice(261,266); let i = index">
+        <button (click)="onSinClick(i+261)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+261]" type="checkbox" id="{{i+261}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
+
+      <label>Tenth Commandment</label>
+      <div *ngFor="let sin of sins.slice(266,273); let i = index">
+        <button (click)="onSinClick(i+266)">{{sin}}</button>
+        <input *ngIf="sinChecked[i+266]" type="checkbox" id="{{i+266}}" checked (change)="onSinChange(i+26, $event)">
+      </div>
     </div>
   </div>
 

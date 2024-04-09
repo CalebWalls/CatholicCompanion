@@ -59,6 +59,11 @@ h1 {
   margin-bottom: 10px; /* Adjust as needed */
 }
 
+.sins-list-container {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 500px; /* Adjust as needed */
+}
+
 button {
   background-color: white; 
   border: none;
