@@ -33,7 +33,4 @@ export class MenuButtonComponent {
   navigateToLiturgicalCalendar() { // New function
     this.router.navigate(['/liturgical-calendar']);
   }
-  navigateHome() { // New function
-    this.router.navigate(['']);
-  }
 }

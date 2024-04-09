@@ -1,0 +1,63 @@
+.sidebar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex; /* This will lay out the children (li) in a row */
+  justify-content: center; /* This will center the children horizontally */
+  align-items: center; /* This will center the children vertically */
+}
+
+.sidebar ul li {
+  font-size: 20px;
+  margin: 0 15px; /* This adds horizontal spacing between the buttons */
+  width: 120px; /* Adjust size as needed */
+  height: 120px; /* Adjust size as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; /* This makes it circular */
+  background-color: #fff;
+  background-size: cover;
+  background-position: center; /* Background color for the buttons */
+  /* Add background image for each button using unique classes or inline styles */
+}
+
+.readings-button {
+  background-image: url('../../../assets/images/dailyreadings.jpg');
+}
+
+.confession-button {
+  background-image: url('../../../assets/images/confession.jpg');
+}
+
+.calendar-button {
+  background-image: url('../../../assets/images/calendar.jpg');
+}
+
+.sidebar ul li a {
+  color: black; /* Text color */
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 150px; /* Adjust line height to match height of li for vertical centering */
+  text-align: center;
+}
+
+.sidebar ul li a:hover {
+  color: #ccc;
+  cursor: pointer;
+}

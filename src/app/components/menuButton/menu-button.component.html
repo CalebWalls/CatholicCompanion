@@ -1,9 +1,7 @@
-<div id="sidebar" class="sidebar" (click)="toggleMenu()">
-    <h2>Menu</h2>
-    <ul *ngIf="menuVisible">
-        <li><a href="#" (click)="navigateHome(); $event.preventDefault()">Home</a></li>
-        <li><a href="#" (click)="openInNewWindow(); $event.preventDefault()">Daily Readings</a></li>
-      <li><a href="#" (click)="navigateToConfession(); $event.preventDefault()">Confession</a></li>
-      <li><a href="#" (click)="navigateToLiturgicalCalendar(); $event.preventDefault()">Liturgical Calendar</a></li>
-    </ul>
-  </div>
+<div id="sidebar" class="sidebar">
+  <ul>
+    <li class="readings-button" title="Daily Readings"><a href="#" (click)="openInNewWindow(); $event.preventDefault()"></a></li>
+    <li class="confession-button" title="Confession"><a href="#" (click)="navigateToConfession(); $event.preventDefault()"></a></li>
+    <li class="calendar-button" title="Liturgical Calendar"><a href="#" (click)="navigateToLiturgicalCalendar(); $event.preventDefault()"></a></li>
+  </ul>
+</div>

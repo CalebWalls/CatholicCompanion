@@ -17,36 +17,3 @@ a {
 a:hover {
   text-decoration: underline;
 }
-.sidebar {
-  width: 200px;
-  background-color: #1289a9;
-  border: 5px solid black;
-  padding: 15px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  color: #fff;
-}
-
-.sidebar h2 {
-  cursor: pointer;
-}
-
-.sidebar h2:hover {
-  color: #ccc;
-}
-
-.sidebar ul li {
-  font-size: 20px;
-  margin-bottom: 15px;
-}
-
-.sidebar ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.sidebar ul li a:hover {
-  color: #ccc;
-  cursor: pointer;
-}

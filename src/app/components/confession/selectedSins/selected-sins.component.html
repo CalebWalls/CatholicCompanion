@@ -1,0 +1,16 @@
+<div class="container">
+    <a class="home-link" href="#" (click)="navigateHome()">Home</a>
+
+    <div *ngIf="selectedSins.length > 0; else noSins">
+      <ol class="sins-list">
+        <li *ngFor="let sin of selectedSins; index as i">
+          {{sin}}
+        </li>
+      </ol>
+    </div>
+    
+    <ng-template #noSins>
+      <p>No Sins selected</p>
+    </ng-template>
+  </div>
+  

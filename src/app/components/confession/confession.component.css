@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* Align content to the top */
   align-items: center;
   min-height: 100vh;
   background-image: url('../../../assets/images/confession.jpg');
@@ -26,18 +26,6 @@
   color: black;
 }
 
-.header p{
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Align content to the top */
-  align-items: center;
-  text-align: center;
-  font-weight: bold;
-  margin-top: 0; /* Remove any margin from the top */
-  color: rgb(248, 242, 242);
-}
-
-
 h1 {
   color: #ffffff;
   font-size: 50px;
@@ -45,3 +33,60 @@ h1 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   margin: 0; /* Remove any default margin */
 }
+
+.home-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  color: rgb(11, 0, 0);
+  font-size: 25px; /* Larger font size */
+  font-weight: bold; /* Bolder font weight */
+  text-decoration: none;
+  transition: color 0.3s; /* Smooth color transition */
+}
+
+.home-link:hover {
+  color: blue;
+}
+.sins-list {
+  margin-top: 50px; /* Adjust as needed */
+}
+.sins-list label {
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px; /* Adjust as needed */
+}
+
+button {
+  background-color: white; 
+  border: none;
+  color: rgb(7, 7, 7);
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #323632;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  background:white;
+  border-radius: 5px;
+  border: 2px solid #555;
+}
+
+input[type="checkbox"]:checked {
+  background: #abd;
+}
+

@@ -17,19 +17,8 @@ export class LiturgicalCalendarComponent {
   ngOnInit() {
   }
 
-  toggleMenu() {
-    this.menuVisible = !this.menuVisible;
-  }
-
-  openInNewWindow() {
-    window.open('https://bible.usccb.org/daily-bible-reading', '_blank', 'height=600,width=800');
-  }
-
-  navigateToConfession() { // New function
-    this.router.navigate(['/confession']);
-  }
-  navigateToLiturgicalCalendar() { // New function
-    this.router.navigate(['/liturgical-calendar']);
+  navigateHome() { // New function
+    this.router.navigate(['']);
   }
   // You can add any properties or methods you need here
 }

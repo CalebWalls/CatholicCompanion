@@ -1,7 +1,24 @@
 <div class="container">
-  <menu-button></menu-button>
+  <a class="home-link" href="#" (click)="navigateHome()">Home</a>
+
   <div class="header">
     <h1>Confession</h1>
     <p>Under Construction</p>
   </div>
+
+  <div class="sins-list">
+    <label>First Commandment</label>
+    <div *ngFor="let sin of sins.slice(0,2); let i = index">
+      <button (click)="onSinClick(i)">{{sin}}</button>
+      <input *ngIf="sinChecked[i]" type="checkbox" id="{{i}}" checked (change)="onSinChange(i, $event)">
+    </div>
+
+    <label>Second Commandment</label>
+    <div *ngFor="let sin of sins.slice(2); let i = index">
+      <button (click)="onSinClick(i+2)">{{sin}}</button>
+      <input *ngIf="sinChecked[i+2]" type="checkbox" id="{{i+2}}" checked (change)="onSinChange(i+2, $event)">
+    </div>
+  </div>
+
+  <button (click)="onSubmit()">Submit</button>
 </div>
