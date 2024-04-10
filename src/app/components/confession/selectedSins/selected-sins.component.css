@@ -34,7 +34,10 @@
   
   .sins-list {
     font-size: 24px; /* Increase font size */
-    max-height: 750px; /* Adjust as needed */
+    max-height: 700px; /* Adjust as needed */
     overflow-y: auto;
+    margin-top: 100px;
+    font-weight: bold;
   }
+
   

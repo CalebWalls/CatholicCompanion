@@ -1,8 +1,8 @@
 .google-calendar {
     border: solid 10px #0b0a0a;
-    width: 50vw; /* Use viewport width to fill the entire screen */
-    height: 100vh; /* Use viewport height to fill the entire screen */
-    margin: 0; /* Remove any margin */
+    width: 95vw; /* Use viewport width to fill the entire screen */
+    height: 85vh; /* Use viewport height to fill the entire screen */
+    margin-top: 100px; /* Remove any margin */
     position: fixed;
     top: 0;
     right: 0;

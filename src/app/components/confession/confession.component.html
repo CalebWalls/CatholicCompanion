@@ -9,6 +9,18 @@
   <div class="sins-list-container">
     <div class="sins-list">
       <label>MORTAL</label>
+      To be a mortal sin it must fulfull these 3 requirements:
+        <ol>
+          <li>
+          Serious matter (sins listed below)
+        </li>
+        <li>
+          Knowledge or firm belief that the act is seriously wrong prior to committing the act
+        </li>
+        <li>
+          Full consent of the will.
+        </li>
+      </ol>
       <label>First Commandment - I am the Lord your God. You shall not have strange gods before me.</label>
       <div *ngFor="let sin of sins.slice(0,18); let i = index">
         <button (click)="onSinClick(i)">{{sin}}</button>
