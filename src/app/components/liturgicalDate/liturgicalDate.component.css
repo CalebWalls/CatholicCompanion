@@ -1,0 +1,15 @@
+.date-widget {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(59, 55, 55);
+    color: rgb(251, 253, 251);
+    width: 400px;
+    height: 200px;
+    border-radius: 25px;
+  }
+  
+  h2 {
+    margin: 0;
+  }
+  

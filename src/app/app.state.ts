@@ -1,6 +1,6 @@
-import { LoginState } from "./store/login/login.reducer";
+import { DailyReflectionsState } from "./store/daily-reflections/daily-relflections.reducer";
 
 export interface AppState {
-  login: LoginState;
+  date: DailyReflectionsState;
   // other states go here...
 }

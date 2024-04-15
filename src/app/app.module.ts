@@ -1,13 +1,13 @@
 import { StoreModule } from '@ngrx/store';
-import { reducer } from './store/login/login.reducer';
+import { reducer } from './store/daily-reflections/daily-relflections.reducer';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { LoginService } from './store/login/login.service';
+import { DailyReflectionsService } from './store/daily-reflections/daily-relflections.service';
 import { EffectsModule } from '@ngrx/effects';
-import { LoginEffects } from './store/login/login.effect';
+import { DailyReflectionsEffects } from './store/daily-reflections/daily-relflections.effect';
 import { AppRoutingModule } from './app.routing.module';
 import { ConfessionComponent } from './components/confession/confession.component';
 import { HomeComponent } from './components/home/home.component';
@@ -18,11 +18,12 @@ import { LiturgicalCalendarComponent } from './components/liturgicalCalendar/lit
 import { MenuButtonComponent } from './components/menuButton/menu-button.component';
 import { SelectedSinsComponent } from './components/confession/selectedSins/selected-sins.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { LiturgicalDateComponent } from './components/liturgicalDate/liturgicalDate.component';
 
 
 @NgModule({
   providers: [
-    LoginService,
+    DailyReflectionsService,
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   declarations: [
@@ -31,6 +32,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     MenuButtonComponent,
     LiturgicalCalendarComponent,
     SelectedSinsComponent,
+    LiturgicalDateComponent,
     ConfessionComponent
   ],
   imports: [
@@ -38,8 +40,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    StoreModule.forRoot({ login: reducer }),
-    EffectsModule.forRoot([LoginEffects]),
+    StoreModule.forRoot({ date: reducer }),
+    EffectsModule.forRoot([DailyReflectionsEffects]),
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule
