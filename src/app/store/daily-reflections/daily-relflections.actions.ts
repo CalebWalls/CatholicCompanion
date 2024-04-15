@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { DateRequest } from '../models/date-request';
+import { DateResponse } from '../models/date-response';
 
 export const GetDailyUpdates = createAction(
   '[Daily Updates] GetUpdate',
@@ -8,7 +9,7 @@ export const GetDailyUpdates = createAction(
 
 export const GetDailyUpdatesSuccess = createAction(
   '[Daily Updates] GetUpdate Success',
-  props<{ response: string }>()
+  props<{ response: DateResponse }>()
 );
 
 export const GetDailyUpdatesFailure = createAction(

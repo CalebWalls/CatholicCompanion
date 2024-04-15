@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DateRequest } from '../models/date-request';
+import { DateResponse } from '../models/date-response';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class DailyReflectionsService {
 
   constructor(private http: HttpClient) {}
 
-  liturgicalCalendar(request : DateRequest): Observable<string> {
-    return this.http.post(this.loginUrl,  request , { responseType: 'text' });
+  liturgicalCalendar(request : DateRequest): Observable<DateResponse> {
+    return this.http.post<DateResponse>(this.loginUrl,  request );
   }
 }

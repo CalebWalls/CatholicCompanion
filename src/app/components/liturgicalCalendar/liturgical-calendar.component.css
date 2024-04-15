@@ -1,13 +1,4 @@
-.google-calendar {
-    border: solid 10px #0b0a0a;
-    width: 95vw; /* Use viewport width to fill the entire screen */
-    height: 85vh; /* Use viewport height to fill the entire screen */
-    margin-top: 100px; /* Remove any margin */
-    position: fixed;
-    top: 0;
-    right: 0;
-  }
-  
+
   .container {
     display: flex;
     flex-direction: column;
@@ -19,14 +10,50 @@
     background-position: center center;
     background-attachment: fixed;
     position: absolute;
-    padding-top: 1%;
+    padding-top: 10%;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
     z-index: -1;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 500px;
   }
 
+  
+  @media (max-width: 414px) {
+    .container {
+      padding-top: 85%; /* Adjust this value as needed */
+    }
+  }
+  
+  /* Adjust padding for small screens */
+  @media (min-width: 415px) and (max-width: 767px) {
+    .container {
+      padding-top: 80%; /* Adjust this value as needed */
+    }
+  }
+  
+  /* Adjust padding for medium-sized screens */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .container {
+      padding-top: 85%; /* Adjust this value as needed */
+    }
+  }
+  
+  /* Adjust padding for iPad screens */
+  @media (min-width: 1025px) and (max-width: 1366px) {
+    .container {
+      padding-top: 50%; /* Adjust this value as needed */
+    }
+  }
+  
+  /* Adjust padding for large screens */
+  @media (min-width: 2000px) {
+    .container {
+      padding-top: 1%; /* Adjust this value as needed */
+    }
+  }
   .home-link {
     position: fixed;
     top: 0;
