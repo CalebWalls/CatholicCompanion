@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://studysphereapi.azurewebsites.net'
+  apiBaseUrl: 'https://catholiccompanionapi.azurewebsites.net'
 };
