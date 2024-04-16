@@ -1,30 +1,27 @@
-.google-calendar {
-    border: solid 10px #0b0a0a;
-    width: 95vw; /* Use viewport width to fill the entire screen */
-    height: 85vh; /* Use viewport height to fill the entire screen */
-    margin-top: 100px; /* Remove any margin */
-    position: fixed;
-    top: 0;
-    right: 0;
-  }
-  
+
   .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url('../../../assets/images/liturgical-calendar.jpg');
     background-size: cover;
+    background-color: rgb(28, 26, 26);
     background-position: center center;
     background-attachment: fixed;
     position: absolute;
-    padding-top: 1%;
+    padding-top: 7%;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    z-index: -1;
+  }
+
+  .date-widget {
+    width: 390px;
+    height: 800px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 1000px;
   }
 
   .home-link {
