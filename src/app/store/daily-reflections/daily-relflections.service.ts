@@ -11,11 +11,16 @@ import { DateResponse } from '../models/date-response';
 })
 export class DailyReflectionsService {
   private baseUrl = environment.apiBaseUrl;
-  private loginUrl = `${this.baseUrl}/DailyUpdates/LiturgicalDate`;
+  private liturgicalDateUrl = `${this.baseUrl}/DailyUpdates/LiturgicalDate`;
+  private dailyReadingsUrl = `${this.baseUrl}/DailyUpdates/DailyReadings`;
 
   constructor(private http: HttpClient) {}
 
   liturgicalCalendar(request : DateRequest): Observable<DateResponse> {
-    return this.http.post<DateResponse>(this.loginUrl,  request );
+    return this.http.post<DateResponse>(this.liturgicalDateUrl,  request );
+  }
+
+  dailyReadings(request : DateRequest): Observable<DateResponse> {
+    return this.http.post<DateResponse>(this.dailyReadingsUrl,  request );
   }
 }

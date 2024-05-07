@@ -24,7 +24,7 @@ export class MenuButtonComponent {
   }
 
   openInNewWindow() {
-    window.open('https://bible.usccb.org/daily-bible-reading', '_blank', 'height=600,width=800');
+    this.router.navigate(['/daily-readings']);
   }
 
   navigateToConfession() { // New function

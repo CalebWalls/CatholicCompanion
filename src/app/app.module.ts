@@ -19,6 +19,7 @@ import { MenuButtonComponent } from './components/menuButton/menu-button.compone
 import { SelectedSinsComponent } from './components/confession/selectedSins/selected-sins.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { LiturgicalDateComponent } from './components/liturgicalDate/liturgicalDate.component';
+import { DailyReadingsComponent } from './components/daily-readings/daily-readings.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { LiturgicalDateComponent } from './components/liturgicalDate/liturgicalD
     LiturgicalCalendarComponent,
     SelectedSinsComponent,
     LiturgicalDateComponent,
-    ConfessionComponent
+    ConfessionComponent,
+    DailyReadingsComponent
   ],
   imports: [
     BrowserModule,
