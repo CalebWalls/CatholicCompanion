@@ -100,3 +100,7 @@ input[type="checkbox"]:checked {
   background: #abd;
 }
 
+input[type=number], select {
+  border-radius: 5px; /* Adjust as needed */
+}
+

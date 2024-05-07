@@ -7,6 +7,16 @@
   </div>
 
   <div class="sins-list-container">
+    <div class="confession-time">
+      <label>Approximately when was your last confession:</label>
+      <input type="number" min="0" placeholder="Enter number" [(ngModel)]="lastConfessionTime">
+      <select [(ngModel)]="lastConfessionUnit">
+        <option value="days">Days</option>
+        <option value="weeks">Weeks</option>
+        <option value="months">Months</option>
+        <option value="years">Years</option>
+      </select>
+    </div>
     <div class="sins-list">
       <label>MORTAL</label>
       To be a mortal sin it must fulfull these 3 requirements:

@@ -1,12 +1,39 @@
 <div class="container">
     <a class="home-link" href="#" (click)="navigateHome()">Home</a>
 
+    <div *ngIf="lastConfessionTime && lastConfessionUnit">
+      <li class="sins-list">Enter the confessional</li>
+      <li class="sins-list">Kneel behind the window or go in front of the priest</li>
+      <li class="sins-list">Make the sighn of the cross and say "Bless me father for I have sinned, in has been about {{lastConfessionTime}} {{getFormattedUnit()}} since my last confession"</li>
+      <li class="sins-list">Begin confessing your sins listed below:</li>        
+    </div>
+
     <div *ngIf="selectedSins.length > 0; else noSins">
       <ol class="sins-list">
         <li *ngFor="let sin of selectedSins; index as i">
           {{sin}}
         </li>
       </ol>
+    </div>
+
+    <div>
+      <li class="sins-list">List to the priest</li>
+      <li class="sins-list">
+        When ask to say your Act of Contrition say the following:
+        <p class="sins-list">
+          O my God, I am heartily sorry for having offended Thee, and I detest all my sins because of thy just punishments,
+           but most of all because they offend Thee, my God, who art all good and deserving of all my love. 
+           I firmly resolve with the help of Thy grace to sin no more and to avoid the near occasion of sin. 
+           Amen.
+        </p>
+      </li>
+      <li class="sins-list">
+        Receive Absolution
+      </li>
+      <li class="sins-list">
+        Leave the confession and fulfull your penance
+      </li>
+      
     </div>
     
     <ng-template #noSins>

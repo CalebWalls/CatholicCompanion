@@ -294,6 +294,8 @@ export class ConfessionComponent {
 ]; // Replace with your sins
   selectedSins: string[] = [];
   sinChecked: boolean[] = [];
+  lastConfessionTime: number = 0;
+  lastConfessionUnit: string = '';
 
   constructor(private router: Router, private sinService: SinService) { 
     this.sinChecked = new Array(this.sins.length).fill(false);
@@ -322,6 +324,7 @@ export class ConfessionComponent {
 
   onSubmit() {
     this.sinService.setSelectedSins(this.selectedSins); // Set the selected sins
+    this.sinService.setLastConfession(this.lastConfessionTime, this.lastConfessionUnit);
     this.router.navigate(['/selected-sins']); // Navigate to the new component
   }
 }

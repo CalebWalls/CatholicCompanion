@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class SelectedSinsComponent implements OnInit {
   selectedSins: string[] = [];
+  lastConfessionTime: number = 0;
+  lastConfessionUnit: string = '';
 
   constructor(private router: Router, private sinService: SinService) { } // Inject the service
 
@@ -17,6 +19,16 @@ export class SelectedSinsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedSins = this.sinService.getSelectedSins(); // Get the selected sins from the service
+    this.selectedSins = this.sinService.getSelectedSins();
+    
+    const lastConfession = this.sinService.getLastConfession(); // Get the last confession time from the service
+    this.lastConfessionTime = lastConfession.time;
+    this.lastConfessionUnit = lastConfession.unit;
+  // Get the selected sins from the service
   }
+
+  getFormattedUnit() {
+    return this.lastConfessionTime === 1 ? this.lastConfessionUnit.slice(0, -1) : this.lastConfessionUnit;
+  }
+  
 }
