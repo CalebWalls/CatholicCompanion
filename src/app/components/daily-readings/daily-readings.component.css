@@ -82,11 +82,24 @@
     margin: 4px 2px;
     transition-duration: 0.4s; /* Transition effect */
     cursor: pointer; /* Change cursor on hover */
+    font-weight: bold;
   }
   
   button:hover {
     background-color: #333; /* Dark grey background */
     color: white; /* White text */
+  }
+
+  h2 {
+    font-size: 30px;
+    color: black;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
   }
   
   
