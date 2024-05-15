@@ -23,7 +23,7 @@ export class MenuButtonComponent {
     this.menuVisible = !this.menuVisible;
   }
 
-  openInNewWindow() {
+  navigateToDailyReadings() {
     this.router.navigate(['/daily-readings']);
   }
 
