@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { AppState } from 'src/app/app.state';
 import { GetReadings } from 'src/app/store/daily-reflections/daily-relflections.actions';
-import { DailyReflectionsState } from 'src/app/store/daily-reflections/daily-relflections.reducer';
+import { selectDailyReflections } from 'src/app/store/daily-reflections/daily-relflections.selector';
+import { DailyReadingsResponse } from 'src/app/store/models/daily-readings-response';
 
 @Component({
   selector: 'daily-readings',
@@ -13,32 +14,26 @@ import { DailyReflectionsState } from 'src/app/store/daily-reflections/daily-rel
 })
 export class DailyReadingsComponent implements OnInit {
     date = new Date();
-    liturgicalDatesWithDate$!: Observable<{ liturgicalDate: string, date: Date }[]>;
-    dateState$: Observable<DailyReflectionsState>;
+    public dailyReadingsResponse$: Observable<DailyReadingsResponse | null> | undefined;
 
-  constructor(private store: Store<AppState>, private router: Router) {
-    this.dateState$ = this.store.select(state => state.date);
-   }
+  constructor(private store: Store<AppState>, private router: Router) { }
 
   navigateHome() {
     this.router.navigate(['']);
   }
 
   ngOnInit(): void {
-    this.liturgicalDatesWithDate$ = this.dateState$.pipe(map(state => {
-      console.log('Selected state:', state); // <-- Add this line
-      const liturgicalDates = state.response?.liturgicalDate || [];
-      return liturgicalDates.map((liturgicalDate, index) => {
-        const date = new Date();
-        date.setDate(date.getDate() + index);
-        return { liturgicalDate, date };
-      });
-    }));
-    this.getDate(new Date());
-  }
-
-  getDate(date: Date){
+    const date = new Date();
     const formattedDate = date.toISOString();
     this.store.dispatch(GetReadings({ request: { date: formattedDate } }));
+    this.dailyReadingsResponse$ = this.store.select(selectDailyReflections).pipe(
+      tap(state => console.log('Selected state:', state.dailyReadingsResponse)),
+      map(readings => readings?.dailyReadingsResponse)
+    );
+    this.getDate(new Date());
+  }  
+
+  getDate(date: Date){
+    
   }
 }

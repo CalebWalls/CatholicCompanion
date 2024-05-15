@@ -1,3 +1,19 @@
 <div class="container">
-    <a class="home-link" href="#" (click)="navigateHome()">Home</a>
+  <a class="home-link" href="#" (click)="navigateHome()">Home</a>
+  <div *ngIf="(dailyReadingsResponse$ | async) as dailyReadingsResponse">
+    <h2 *ngIf="dailyReadingsResponse.firstReading">First Reading</h2>
+    <p *ngIf="dailyReadingsResponse.firstReading">{{ dailyReadingsResponse.firstReading }}</p>
+
+    <h2 *ngIf="dailyReadingsResponse.responsorialPsalm">Responsorial Psalm</h2>
+    <p *ngIf="dailyReadingsResponse.responsorialPsalm">{{ dailyReadingsResponse.responsorialPsalm }}</p>
+
+    <h2 *ngIf="dailyReadingsResponse.secondReading">Second Reading</h2>
+    <p *ngIf="dailyReadingsResponse.secondReading">{{ dailyReadingsResponse.secondReading }}</p>
+
+    <h2 *ngIf="dailyReadingsResponse.alleluiaVerse">Alleluia Verse</h2>
+    <p *ngIf="dailyReadingsResponse.alleluiaVerse">{{ dailyReadingsResponse.alleluiaVerse }}</p>
+
+    <h2 *ngIf="dailyReadingsResponse.gospelReading">Gospel Reading</h2>
+    <p *ngIf="dailyReadingsResponse.gospelReading">{{ dailyReadingsResponse.gospelReading }}</p>
   </div>
+</div>

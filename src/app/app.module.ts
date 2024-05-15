@@ -42,7 +42,7 @@ import { DailyReadingsComponent } from './components/daily-readings/daily-readin
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    StoreModule.forRoot({ date: reducer }),
+    StoreModule.forRoot({ dailyReflections: reducer }),
     EffectsModule.forRoot([DailyReflectionsEffects]),
     MatFormFieldModule,
     MatInputModule,

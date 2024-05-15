@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DateRequest } from '../models/date-request';
 import { DateResponse } from '../models/date-response';
+import { DailyReadingsResponse } from '../models/daily-readings-response';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class DailyReflectionsService {
     return this.http.post<DateResponse>(this.liturgicalDateUrl,  request );
   }
 
-  dailyReadings(request : DateRequest): Observable<DateResponse> {
-    return this.http.post<DateResponse>(this.dailyReadingsUrl,  request );
+  dailyReadings(request : DateRequest): Observable<DailyReadingsResponse> {
+    return this.http.post<DailyReadingsResponse>(this.dailyReadingsUrl,  request );
   }
 }

@@ -26,13 +26,21 @@ export class DailyReflectionsEffects {
       ofType(GetReadings),
       mergeMap(action =>
         this.dailyReflectionsService.dailyReadings(action.request).pipe(
-          tap(response => console.log('API response:', response)),
+          tap(response => {
+            console.log('API response:', response);
+            if (response) {
+              console.log('Response is returned from the API');
+            } else {
+              console.log('No response is returned from the API');
+            }
+          }),
           map(response => GetReadingsSuccess({ response })),
           catchError((error) => of(GetReadingsFailure({ error })))
         )
       )
     )
   );
+  
 
   constructor(private actions$: Actions, private dailyReflectionsService: DailyReflectionsService) {}
 }
