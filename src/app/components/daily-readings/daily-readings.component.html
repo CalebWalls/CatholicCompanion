@@ -20,5 +20,8 @@
 
     <h2 *ngIf="dailyReadingsResponse.gospelReading">Gospel Reading</h2>
     <p *ngIf="dailyReadingsResponse.gospelReading">{{ dailyReadingsResponse.gospelReading }}</p>
+
+    <h2 *ngIf="dailyReadingsResponse.firstReading === null">Multiple Readings</h2>
+    <button *ngIf="dailyReadingsResponse?.firstReading === null" (click)="navigateToUrl(dailyReadingsResponse.url)">Choose Reading</button>
   </div>
 </div>

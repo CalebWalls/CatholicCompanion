@@ -4,5 +4,6 @@ export class DailyReadingsResponse {
     secondReading?: string;
     alleluiaVerse?: string;
     gospelReading?: string;
+    url?: string;
     error?: string;
 }

@@ -41,6 +41,13 @@ export class DailyReadingsComponent implements OnInit {
     );
   }
 
+  navigateToUrl(url: string | undefined): void {
+    if (url) {
+      window.open(url, "_blank");
+    }
+  }
+  
+
   ngOnInit(): void {
     this.getReadings(); // Fetch the readings when the component is initialized
   }
