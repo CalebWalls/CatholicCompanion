@@ -3,8 +3,8 @@
 
     <div *ngIf="lastConfessionTime && lastConfessionUnit">
       <li class="sins-list">Enter the confessional</li>
-      <li class="sins-list">Kneel behind the window or go in front of the priest</li>
-      <li class="sins-list">Make the sighn of the cross and say "Bless me father for I have sinned, in has been about {{lastConfessionTime}} {{getFormattedUnit()}} since my last confession"</li>
+      <li class="sins-list">Kneel behind the screen or go in front of the priest</li>
+      <li class="sins-list">Make the sign of the cross and say, "Bless me father for I have sinned, it has been about {{lastConfessionTime}} {{getFormattedUnit()}} since my last confession"</li>
       <li class="sins-list">Begin confessing your sins listed below:</li>        
     </div>
 
@@ -16,10 +16,10 @@
       </ol>
     </div>
 
-    <div>
-      <li class="sins-list">List to the priest</li>
+    <div *ngIf="selectedSins.length > 0">
+      <li class="sins-list">Listen to the priest</li>
       <li class="sins-list">
-        When ask to say your Act of Contrition say the following:
+        When asked to say your Act of Contrition say the following:
         <p class="sins-list">
           O my God, I am heartily sorry for having offended Thee, and I detest all my sins because of thy just punishments,
            but most of all because they offend Thee, my God, who art all good and deserving of all my love. 
@@ -31,7 +31,7 @@
         Receive Absolution
       </li>
       <li class="sins-list">
-        Leave the confession and fulfull your penance
+        Leave the confession and fulfill your penance
       </li>
       
     </div>

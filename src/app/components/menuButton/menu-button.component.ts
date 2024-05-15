@@ -23,8 +23,8 @@ export class MenuButtonComponent {
     this.menuVisible = !this.menuVisible;
   }
 
-  openInNewWindow() {
-    window.open('https://bible.usccb.org/daily-bible-reading', '_blank', 'height=600,width=800');
+  navigateToDailyReadings() {
+    this.router.navigate(['/daily-readings']);
   }
 
   navigateToConfession() { // New function

@@ -61,3 +61,18 @@
   color: #ccc;
   cursor: pointer;
 }
+
+.sidebar ul li {
+  position: relative; /* This allows us to position the label relative to the button */
+  margin-bottom: 30px; /* This adds some space below each button for the label */
+}
+
+.button-label {
+  position: absolute; /* This allows us to position the label anywhere within the li */
+  width: 100%; /* This makes the label take up the full width of the li */
+  bottom: -45px; /* This positions the label 20px below the bottom edge of the button */
+  text-align: center;
+  font-size: 20x;
+  color: #fbf6f6; /* Change this to any color you want for the label text */
+}
+

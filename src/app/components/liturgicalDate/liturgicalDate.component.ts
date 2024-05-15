@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { DailyReflectionsState } from 'src/app/store/daily-reflections/daily-relflections.reducer';
 import { AppState } from 'src/app/app.state';
 import { GetDailyUpdates } from 'src/app/store/daily-reflections/daily-relflections.actions';
+import { selectDailyReflections } from 'src/app/store/daily-reflections/daily-relflections.selector';
 
 @Component({
   selector: 'app-liturgicalDate',
@@ -15,17 +16,17 @@ import { GetDailyUpdates } from 'src/app/store/daily-reflections/daily-relflecti
 export class LiturgicalDateComponent implements OnInit {
   date = new Date();
   liturgicalDatesWithDate$!: Observable<{ liturgicalDate: string, date: Date }[]>;
-    dateState$: Observable<DailyReflectionsState>;
+  dateState$: Observable<DailyReflectionsState>;
   dateSubscription!: Subscription;
 
   constructor(private store: Store<AppState>, private router: Router) {
-    this.dateState$ = this.store.select(state => state.date);
+    this.dateState$ = this.store.select(selectDailyReflections); // use the selectDate selector
   }
 
   ngOnInit(): void {
     this.liturgicalDatesWithDate$ = this.dateState$.pipe(map(state => {
       console.log('Selected state:', state); // <-- Add this line
-      const liturgicalDates = state.response?.liturgicalDate || [];
+      const liturgicalDates = state.dateResponse?.liturgicalDate || [];
       return liturgicalDates.map((liturgicalDate, index) => {
         const date = new Date();
         date.setDate(date.getDate() + index);
