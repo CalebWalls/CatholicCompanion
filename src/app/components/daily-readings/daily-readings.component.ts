@@ -13,8 +13,8 @@ import { DailyReadingsResponse } from 'src/app/store/models/daily-readings-respo
   styleUrls: ['./daily-readings.component.css']
 })
 export class DailyReadingsComponent implements OnInit {
-    date = new Date();
-    public dailyReadingsResponse$: Observable<DailyReadingsResponse | null> | undefined;
+  date: Date = new Date(); // Initialize date to today's date
+  public dailyReadingsResponse$: Observable<DailyReadingsResponse | null> | undefined;
 
   constructor(private store: Store<AppState>, private router: Router) { }
 
@@ -22,18 +22,32 @@ export class DailyReadingsComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  ngOnInit(): void {
-    const date = new Date();
-    const formattedDate = date.toISOString();
+  incrementDate() {
+    this.date = new Date(this.date.setDate(this.date.getDate() + 1)); // Increment the date by 1 day
+    this.getReadings();
+  }
+
+  decrementDate() {
+    this.date = new Date(this.date.setDate(this.date.getDate() - 1)); // Decrement the date by 1 day
+    this.getReadings();
+  }
+
+  getReadings() {
+    const formattedDate = this.date.toISOString();
     this.store.dispatch(GetReadings({ request: { date: formattedDate } }));
     this.dailyReadingsResponse$ = this.store.select(selectDailyReflections).pipe(
       tap(state => console.log('Selected state:', state.dailyReadingsResponse)),
       map(readings => readings?.dailyReadingsResponse)
     );
-    this.getDate(new Date());
-  }  
+  }
+
+  ngOnInit(): void {
+    this.getReadings(); // Fetch the readings when the component is initialized
+  }
 
   getDate(date: Date){
     
   }
 }
+
+

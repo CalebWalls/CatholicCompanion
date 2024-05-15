@@ -1,21 +1,21 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Align content to the top */
-    align-items: flex-start; /* Align items to the left */
-    min-height: 100vh;
-    background-color: rgb(79, 85, 88);
-    background-size: cover;
-    background-position: center center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: -1;
-    padding: 20px; /* Add some padding */
-    overflow: auto;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top */
+  align-items: center; /* Align items to the center */
+  min-height: 100vh;
+  background-color: rgb(79, 85, 88);
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  padding: 20px; /* Add some padding */
+  overflow: auto;
+}
 
   .home-link {
     position: fixed;
@@ -32,3 +32,42 @@
   .home-link:hover {
     color: blue;
   }
+
+  .reading-card {
+    background-color: white;
+    padding: 20px;
+    margin: 20px auto; /* Top and bottom margin is 20px, left and right margin is auto */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width: 90%; /* Set the width to 90% of the parent container */
+    max-width: 800px; /* Set a max-width to ensure the box doesn't get too wide on large screens */
+  }
+  
+  .reading-card h2 {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .reading-card p {
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .navigation {
+    display: flex;
+    justify-content: space-around; /* Change this from space-between to space-around */
+    align-items: center;
+    margin-bottom: 20px;
+    width: 50%; /* Set the width to 90% of the parent container */
+    max-width: 800px; /* Set a max-width to ensure the navigation doesn't get too wide on large screens */
+  }
+  
+  .date-display {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+  }
+  
+  
+  

@@ -1,6 +1,11 @@
 <div class="container">
+  <div class="navigation">
+    <button (click)="decrementDate()">←</button>
+    <div class="date-display">{{ date | date:'fullDate' }}</div>
+    <button (click)="incrementDate()">→</button>
+  </div>
   <a class="home-link" href="#" (click)="navigateHome()">Home</a>
-  <div *ngIf="(dailyReadingsResponse$ | async) as dailyReadingsResponse">
+  <div *ngIf="(dailyReadingsResponse$ | async) as dailyReadingsResponse" class="reading-card">
     <h2 *ngIf="dailyReadingsResponse.firstReading">First Reading</h2>
     <p *ngIf="dailyReadingsResponse.firstReading">{{ dailyReadingsResponse.firstReading }}</p>
 
