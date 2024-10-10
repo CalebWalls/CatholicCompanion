@@ -23,17 +23,25 @@ export class DailyReadingsComponent implements OnInit {
   }
 
   incrementDate() {
-    this.date = new Date(this.date.setDate(this.date.getDate() + 1)); // Increment the date by 1 day
+    this.date.setDate(this.date.getDate() + 1); // Increment the date by 1 day
+    this.adjustDateToTimeZone();
     this.getReadings();
   }
 
   decrementDate() {
-    this.date = new Date(this.date.setDate(this.date.getDate() - 1)); // Decrement the date by 1 day
+    this.date.setDate(this.date.getDate() - 1); // Decrement the date by 1 day
+    this.adjustDateToTimeZone();
     this.getReadings();
   }
 
+  adjustDateToTimeZone() {
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const localDateString = this.date.toLocaleString('en-US', { timeZone, hour12: false });
+    this.date = new Date(localDateString);
+  }
+
   getReadings() {
-    const formattedDate = this.date.toISOString();
+    const formattedDate = this.formatDateToLocalISOString(this.date);
     this.store.dispatch(GetReadings({ request: { date: formattedDate } }));
     this.dailyReadingsResponse$ = this.store.select(selectDailyReflections).pipe(
       tap(state => console.log('Selected state:', state.dailyReadingsResponse)),
@@ -41,20 +49,26 @@ export class DailyReadingsComponent implements OnInit {
     );
   }
 
+  formatDateToLocalISOString(date: Date): string {
+    const pad = (num: number) => num.toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1);
+    const day = pad(date.getDate());
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+    const seconds = pad(date.getSeconds());
+    const milliseconds = date.getMilliseconds().toString().padStart(3, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
+  }
+
   navigateToUrl(url: string | undefined): void {
     if (url) {
       window.open(url, "_blank");
     }
   }
-  
 
   ngOnInit(): void {
+    this.adjustDateToTimeZone(); // Adjust the date to the user's time zone
     this.getReadings(); // Fetch the readings when the component is initialized
   }
-
-  getDate(date: Date){
-    
-  }
 }
-
-
