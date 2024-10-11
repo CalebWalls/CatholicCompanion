@@ -6,6 +6,7 @@ import { AppState } from 'src/app/app.state';
 import { GetReadings } from 'src/app/store/daily-reflections/daily-relflections.actions';
 import { selectDailyReflections } from 'src/app/store/daily-reflections/daily-relflections.selector';
 import { DailyReadingsResponse } from 'src/app/store/models/daily-readings-response';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'daily-readings',
@@ -16,10 +17,15 @@ export class DailyReadingsComponent implements OnInit {
   date: Date = new Date(); // Initialize date to today's date
   public dailyReadingsResponse$: Observable<DailyReadingsResponse | null> | undefined;
 
-  constructor(private store: Store<AppState>, private router: Router) { }
+  constructor(private store: Store<AppState>, private router: Router, private sanitizer: DomSanitizer) { }
 
   navigateHome() {
     this.router.navigate(['']);
+  }
+
+  formatText(text: string): SafeHtml {
+    const formattedText = text.replace(/R\.\s(.*?[.!?])/g, '<br><strong style="font-weight: bold; color: #000;">R. $1</strong><br>');
+    return this.sanitizer.bypassSecurityTrustHtml(formattedText);
   }
 
   incrementDate() {

@@ -52,6 +52,12 @@
     color: #666;
     line-height: 1.6;
   }
+  
+  .reading-card p strong {
+    color: #000; /* Set the color of bold text to black */
+    font-weight: bold; /* Ensure the text is bold */
+  }
+  
 
   .navigation {
     display: flex;

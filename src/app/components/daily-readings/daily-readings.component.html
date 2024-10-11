@@ -10,13 +10,13 @@
     <p *ngIf="dailyReadingsResponse.firstReading">{{ dailyReadingsResponse.firstReading }}</p>
 
     <h2 *ngIf="dailyReadingsResponse.responsorialPsalm">Responsorial Psalm</h2>
-    <p *ngIf="dailyReadingsResponse.responsorialPsalm">{{ dailyReadingsResponse.responsorialPsalm }}</p>
+    <p *ngIf="dailyReadingsResponse.responsorialPsalm" [innerHTML]="formatText(dailyReadingsResponse.responsorialPsalm)"></p>
 
     <h2 *ngIf="dailyReadingsResponse.secondReading">Second Reading</h2>
     <p *ngIf="dailyReadingsResponse.secondReading">{{ dailyReadingsResponse.secondReading }}</p>
 
     <h2 *ngIf="dailyReadingsResponse.alleluiaVerse">Alleluia Verse</h2>
-    <p *ngIf="dailyReadingsResponse.alleluiaVerse">{{ dailyReadingsResponse.alleluiaVerse }}</p>
+    <p *ngIf="dailyReadingsResponse.alleluiaVerse" [innerHTML]="formatText(dailyReadingsResponse.alleluiaVerse)"></p>
 
     <h2 *ngIf="dailyReadingsResponse.gospelReading">Gospel Reading</h2>
     <p *ngIf="dailyReadingsResponse.gospelReading">{{ dailyReadingsResponse.gospelReading }}</p>
