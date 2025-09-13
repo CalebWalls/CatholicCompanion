@@ -4,7 +4,7 @@
     justify-content: flex-start; /* Align content to the top */
     align-items: flex-start; /* Align items to the left */
     min-height: 100vh;
-    background-color: #667;
+    background-color: rgb(79, 85, 88);
     background-size: cover;
     background-position: center center;
     position: absolute;
