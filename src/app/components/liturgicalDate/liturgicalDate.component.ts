@@ -3,15 +3,16 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DailyReflectionsState } from 'src/app/store/daily-reflections/daily-relflections.reducer';
-import { AppState } from 'src/app/app.state';
-import { GetDailyUpdates } from 'src/app/store/daily-reflections/daily-relflections.actions';
-import { selectDailyReflections } from 'src/app/store/daily-reflections/daily-relflections.selector';
-
+import { AppState } from '../../app.state';
+import { GetDailyUpdates } from '../../store/daily-reflections/daily-relflections.actions';
+import { DailyReflectionsState } from '../../store/daily-reflections/daily-relflections.reducer';
+import { selectDailyReflections } from '../../store/daily-reflections/daily-relflections.selector';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-liturgicalDate',
   templateUrl: './liturgicalDate.component.html',
-  styleUrls: ['./liturgicalDate.component.css']
+  styleUrls: ['./liturgicalDate.component.css'],
+  imports: [DatePipe]
 })
 export class LiturgicalDateComponent implements OnInit {
   date = new Date();

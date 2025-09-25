@@ -2,16 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, map, tap } from 'rxjs';
-import { AppState } from 'src/app/app.state';
-import { GetReadings } from 'src/app/store/daily-reflections/daily-relflections.actions';
-import { selectDailyReflections } from 'src/app/store/daily-reflections/daily-relflections.selector';
-import { DailyReadingsResponse } from 'src/app/store/models/daily-readings-response';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AppState } from '../../app.state';
+import { GetReadings } from '../../store/daily-reflections/daily-relflections.actions';
+import { selectDailyReflections } from '../../store/daily-reflections/daily-relflections.selector';
+import { DailyReadingsResponse } from '../../store/models/daily-readings-response';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'daily-readings',
   templateUrl: './daily-readings.component.html',
-  styleUrls: ['./daily-readings.component.css']
+  styleUrls: ['./daily-readings.component.css'],
+  imports: [DatePipe],
+
 })
 export class DailyReadingsComponent implements OnInit {
   date: Date = new Date(); // Initialize date to today's date

@@ -1,0 +1,122 @@
+<div class="cc-page">
+  <header class="cc-hero">
+    <div class="cc-crest" aria-hidden="true">
+      <!-- Simple cross in a circle -->
+      <svg
+        viewBox="0 0 100 100"
+        focusable="false"
+        role="img"
+        aria-label="Catholic Companion crest"
+      >
+        <circle cx="50" cy="50" r="46" class="ring" />
+        <rect x="46" y="20" width="8" height="60" rx="2" class="cross" />
+        <rect x="30" y="46" width="40" height="8" rx="2" class="cross" />
+      </svg>
+    </div>
+    <div class="cc-hero-text">
+      <h1>Catholic Companion</h1>
+      <p>
+        Ask any Catholic question — Scripture, Tradition, history, prayer, and
+        more.
+      </p>
+    </div>
+  </header>
+
+  <main class="cc-content">
+    <section class="cc-ask">
+      <mat-card class="cc-card">
+        <div class="prompt">What can I help you with?</div>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Type your question (Shift+Enter for a new line)</mat-label>
+          <textarea
+            #questionBox
+            matInput
+            rows="3"
+            formControlName="question"
+            (keydown)="onKeydown($event)"
+            placeholder="e.g., Where is confession in the Bible?"
+          ></textarea>
+          <button
+            mat-icon-button
+            matSuffix
+            aria-label="Clear"
+            (click)="form.reset()"
+            *ngIf="form.value.question"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div class="actions">
+          <button mat-stroked-button color="primary" (click)="clearAll()">
+            <mat-icon>delete_sweep</mat-icon>
+            Clear
+          </button>
+          <span class="spacer"></span>
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="submit()"
+            [disabled]="form.invalid || (loading$ | async)"
+          >
+            <mat-icon>auto_awesome</mat-icon>
+            Ask Catholic Companion
+          </button>
+        </div>
+
+        <mat-progress-bar
+          *ngIf="(loading$ | async)"
+          mode="indeterminate"
+        ></mat-progress-bar>
+
+        <div class="starters">
+          <div class="label">Try one of these:</div>
+          <mat-chip-list>
+            <mat-chip
+              *ngFor="let q of starterQuestions"
+              (click)="useStarter(q)"
+              clickable
+            >
+              {{ q }}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </mat-card>
+    </section>
+
+    <section class="cc-chat">
+      <ng-container *ngIf="(conversation$ | async) as convo">
+        <div *ngIf="!convo?.length" class="empty">
+          <mat-icon>forum</mat-icon>
+          <p>Your answers will appear here.</p>
+        </div>
+
+        <div class="bubble-group" *ngFor="let msg of convo">
+          <div
+            class="bubble"
+            [class.user]="msg.role === 'user'"
+            [class.assistant]="msg.role === 'assistant'"
+          >
+            <div class="meta">
+              <mat-icon class="avatar" *ngIf="msg.role === 'assistant'">
+                auto_awesome
+              </mat-icon>
+              <mat-icon class="avatar" *ngIf="msg.role === 'user'">person</mat-icon>
+              <span class="who">
+                {{ msg.role === 'user' ? 'You' : 'Catholic Companion' }}
+              </span>
+              <span class="time">• {{ msg.timestamp | date: 'short' }}</span>
+            </div>
+            <div class="content" [innerHTML]="msg.content"></div>
+          </div>
+        </div>
+      </ng-container>
+
+      <mat-card class="error" *ngIf="(error$ | async) as err">
+        <mat-icon color="warn">error_outline</mat-icon>
+        <span>{{ err }}</span>
+      </mat-card>
+    </section>
+  </main>
+</div>

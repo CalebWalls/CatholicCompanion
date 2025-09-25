@@ -6,13 +6,15 @@ import { HomeComponent } from './components/home/home.component';
 import { LiturgicalCalendarComponent } from './components/liturgicalCalendar/liturgical-calendar.component';
 import { SelectedSinsComponent } from './components/confession/selectedSins/selected-sins.component';
 import { DailyReadingsComponent } from './components/daily-readings/daily-readings.component';
+import { GptComponent } from './components/gpt/gpt.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'confession', component: ConfessionComponent },
   { path: 'liturgical-calendar', component: LiturgicalCalendarComponent },
   { path: 'selected-sins', component: SelectedSinsComponent },
-  { path: 'daily-readings', component: DailyReadingsComponent }
+  { path: 'daily-readings', component: DailyReadingsComponent },
+  { path: 'gpt', component: GptComponent }
   // more routes...
 ];
 
