@@ -14,17 +14,13 @@ import { HomeComponent } from './components/home/home.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
 import { LiturgicalCalendarComponent } from './components/liturgicalCalendar/liturgical-calendar.component';
 import { MenuButtonComponent } from './components/menuButton/menu-button.component';
 import { SelectedSinsComponent } from './components/confession/selectedSins/selected-sins.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { LiturgicalDateComponent } from './components/liturgicalDate/liturgicalDate.component';
 import { DailyReadingsComponent } from './components/daily-readings/daily-readings.component';
-import { GptComponent } from './components/gpt/gpt.component';
-import { TextFieldModule } from '@angular/cdk/text-field';
+
 
 @NgModule({
   providers: [
@@ -32,17 +28,17 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   declarations: [
+    AppComponent,
+    HomeComponent,
+    MenuButtonComponent,
+    LiturgicalCalendarComponent,
+    SelectedSinsComponent,
+    LiturgicalDateComponent,
+    ConfessionComponent,
+    DailyReadingsComponent
   ],
   imports: [
     BrowserModule,
-    AppComponent,
-    ConfessionComponent,
-    DailyReadingsComponent,
-    LiturgicalCalendarComponent,
-    MenuButtonComponent,
-    SelectedSinsComponent,
-    LiturgicalDateComponent,
-    GptComponent,
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
@@ -50,13 +46,8 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     EffectsModule.forRoot([DailyReflectionsEffects]),
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatChipsModule,
-    TextFieldModule,
-    HomeComponent
-  ]
+    MatButtonModule
+  ],
+  bootstrap: [AppComponent]
 })
-
 export class AppModule { }
