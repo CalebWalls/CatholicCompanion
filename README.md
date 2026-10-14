@@ -1,10 +1,10 @@
 # Catholic Companion UI
 
-A daily Catholic companion built with Angular 14, NgRx, and a .NET 8 API in the sibling `CatholicCompanionApi` repository.
+A daily Catholic companion built with Angular 18, NgRx, and a .NET 10 API in the sibling `CatholicCompanionApi` repository.
 
 ## Run locally
 
-Use Node 16.20.2 for this existing Angular 14 workspace (`.nvmrc` is included). With nvm-windows: `nvm install 16.20.2`, then `nvm use 16.20.2`.
+Use Node 22.23.3 for this existing Angular 18 workspace (`.nvmrc` is included). With nvm-windows: `nvm install 22.23.3`, then `nvm use 22.23.3`.
 
 Start the API in a separate terminal:
 
@@ -24,7 +24,7 @@ npm start
 
 Open http://127.0.0.1:4200. The UI proxies `/api` to http://localhost:5067 using `proxy.conf.json`. No development HTTPS certificate is required. Production continues to use the existing Azure API URL. Stop either terminal with Ctrl+C.
 
-For the initial local setup, a compatible portable Node runtime is also available at `C:\Repos\.tmp\node16\node-v16.20.2-win-x64\node.exe`. You can invoke the Angular CLI directly with that executable and `node_modules/@angular/cli/bin/ng.js`.
+For the initial local setup, a compatible portable Node runtime is also available at `C:\Repos\.tmp\node-upgrade\node-v22.23.3-win-x64\node.exe`. You can invoke the Angular CLI directly with that executable and `node_modules/@angular/cli/bin/ng.js`.
 
 ## Features
 
