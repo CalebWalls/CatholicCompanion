@@ -16,6 +16,7 @@ export class ConfessionComponent {
   editingIndex: number | null = null;
   customError = '';
   status = '';
+  confirmClear = false;
   search = '';
   lastConfessionTime = this.sinService.getLastConfession().time;
   lastConfessionUnit = this.sinService.getLastConfession().unit || 'months';
@@ -99,7 +100,7 @@ export class ConfessionComponent {
 
   constructor(
     private router: Router,
-    private sinService: SinService,
+    public sinService: SinService,
   ) {}
 
   filteredItems(items: string[]): string[] {
@@ -154,11 +155,26 @@ export class ConfessionComponent {
     this.status = 'Your personal item was removed.';
   }
 
-  onSubmit(): void {
+  saveLastConfession(): void {
     this.sinService.setLastConfession(
       this.lastConfessionTime,
       this.lastConfessionUnit,
     );
+  }
+
+  clear(): void {
+    this.sinService.clear();
+    this.selectedSins = [];
+    this.customSins = [];
+    this.lastConfessionTime = 0;
+    this.lastConfessionUnit = 'months';
+    this.cancelEdit();
+    this.status = '';
+    this.confirmClear = false;
+  }
+
+  onSubmit(): void {
+    this.saveLastConfession();
     this.router.navigate(['/selected-sins']);
   }
 }

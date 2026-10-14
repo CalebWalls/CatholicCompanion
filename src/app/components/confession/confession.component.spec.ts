@@ -8,9 +8,28 @@ describe('Confession preparation', () => {
   let component: ConfessionComponent;
   let router: jasmine.SpyObj<Router>;
   beforeEach(() => {
+    localStorage.removeItem('companion.confession');
     service = new SinService();
     router = jasmine.createSpyObj('Router', ['navigate']);
     component = new ConfessionComponent(router, service);
+  });
+
+  afterEach(() => localStorage.removeItem('companion.confession'));
+
+  it('saves time changes before review and clears saved preparation', () => {
+    service.setRememberConfession(true);
+    component.lastConfessionTime = 4;
+    component.lastConfessionUnit = 'days';
+    component.saveLastConfession();
+    expect(new SinService().getLastConfession()).toEqual({
+      time: 4,
+      unit: 'days',
+    });
+    component.toggle(examinationItems[0]);
+    component.clear();
+    expect(component.selectedSins).toEqual([]);
+    expect(new SinService().getSelectedSins()).toEqual([]);
+    expect(service.rememberConfession).toBeFalse();
   });
 
   it('adds, trims, edits, and removes a personal item without changing checklist selections', () => {

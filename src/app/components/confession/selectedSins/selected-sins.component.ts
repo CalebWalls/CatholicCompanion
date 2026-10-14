@@ -11,7 +11,7 @@ export class SelectedSinsComponent {
   customSins = this.sinService.getCustomSins();
   lastConfession = this.sinService.getLastConfession();
   confirmClear = false;
-  constructor(private sinService: SinService) {}
+  constructor(public sinService: SinService) {}
 
   get unit(): string {
     return this.lastConfession.time === 1

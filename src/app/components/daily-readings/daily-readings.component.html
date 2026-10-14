@@ -4,54 +4,116 @@
   <p>Read slowly. Notice what stays with you. Let it become a prayer.</p>
 </div>
 <div class="date-navigation">
-  <button (click)="changeDate(-1)" aria-label="Previous day">←</button
-  ><time>{{ date | date: "EEEE, MMMM d, y" }}</time
-  ><button (click)="changeDate(1)" aria-label="Next day">→</button
-  ><button (click)="today()">Today</button>
+  <button (click)="changeDate(-1)" aria-label="Previous day">←</button>
+  <time>{{ date | date: "EEEE, MMMM d, y" }}</time>
+  <button (click)="changeDate(1)" aria-label="Next day">→</button>
+  <button (click)="today()">Today</button>
 </div>
 <div class="readings-layout" *ngIf="state$ | async as state">
   <section aria-label="Daily Mass readings" aria-live="polite">
     <div class="card empty-state" *ngIf="state.readingsLoading">
       <app-icon name="book"></app-icon>
-      <h3>Opening today’s readings…</h3>
+      <h3>Opening the readings…</h3>
       <p>Taking a moment to bring you the Word.</p>
     </div>
     <div class="notice error" *ngIf="state.readingsError">
       <p>{{ state.readingsError }}</p>
       <button class="button secondary" (click)="load()">Try again</button>
-      <a
-        class="text-link"
-        [href]="sourceUrl"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Read at USCCB ↗</a
-      >
     </div>
     <ng-container *ngIf="state.dailyReadingsResponse as readings">
-      <ng-container *ngFor="let section of sections"
-        ><article class="card reading-card" *ngIf="readings[section.key]">
-          <p class="eyebrow">{{ section.title }}</p>
-          <p class="reading-text">{{ readings[section.key] }}</p>
-        </article></ng-container
-      >
       <div
-        class="card empty-state"
-        *ngIf="
-          !state.readingsError &&
-          !readings.firstReading &&
-          !readings.gospelReading
-        "
+        class="card mass-choice"
+        *ngIf="readings.readingSets && readings.readingSets.length > 1"
       >
-        <h3>Choose the readings for this celebration.</h3>
-        <p>Some days have more than one set of readings.</p>
-        <a
-          class="button"
-          [href]="readings.url || sourceUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          >View readings at USCCB ↗</a
+        <p class="eyebrow">MORE THAN ONE MASS TODAY</p>
+        <h2>Choose a set of readings.</h2>
+        <p>
+          Read the Mass you’ll attend, or explore the other celebrations here.
+        </p>
+        <label class="form-label" for="reading-set">Mass readings</label>
+        <select
+          id="reading-set"
+          [ngModel]="selectedSetIndex"
+          (ngModelChange)="chooseSet($event)"
         >
+          <option
+            *ngFor="let set of readings.readingSets; let i = index"
+            [ngValue]="i"
+          >
+            {{ set.title }}
+          </option>
+        </select>
       </div>
+      <ng-container *ngIf="activeSet(readings) as set; else legacyReadings">
+        <header class="celebration-heading">
+          <h2 *ngIf="set.celebration">{{ set.celebration }}</h2>
+          <p class="muted">{{ set.lectionary }}</p>
+          <p class="notice source-note" *ngIf="set.note">{{ set.note }}</p>
+        </header>
+        <div class="notice error" *ngIf="set.error && !state.readingsError">
+          <p>{{ set.error }}</p>
+          <button class="button secondary" (click)="load()">Try again</button>
+        </div>
+        <article
+          class="card reading-card"
+          *ngFor="let section of set.sections; let i = index"
+        >
+          <h3 class="eyebrow">{{ section.title }}</h3>
+          <div class="reading-options" *ngIf="section.options.length > 1">
+            <label class="form-label" [for]="'reading-option-' + i"
+              >Choose {{ section.title }} option</label
+            >
+            <select
+              [id]="'reading-option-' + i"
+              [ngModel]="selectedOptions[i] || 0"
+              (ngModelChange)="selectedOptions[i] = $event"
+            >
+              <option
+                *ngFor="let option of section.options; let j = index"
+                [ngValue]="j"
+              >
+                {{ option.reference || "Option " + (j + 1) }}
+              </option>
+            </select>
+            <p class="muted">
+              {{ section.options.length }} published options. Your parish may
+              use either reading.
+            </p>
+          </div>
+          <ng-container
+            *ngIf="section.options[selectedOptions[i] || 0] as option"
+          >
+            <p class="scripture-reference" *ngIf="option.reference">
+              {{ option.reference }}
+            </p>
+            <p class="reading-text">{{ option.text }}</p>
+          </ng-container>
+        </article>
+        <p class="muted" *ngIf="set.sections.length">
+          Showing the readings published by USCCB. Where the source gives a
+          selection, other approved readings may also be used.
+        </p>
+      </ng-container>
+      <ng-template #legacyReadings>
+        <ng-container *ngFor="let section of sections">
+          <article class="card reading-card" *ngIf="readings[section.key]">
+            <p class="eyebrow">{{ section.title }}</p>
+            <p class="reading-text">{{ readings[section.key] }}</p>
+          </article>
+        </ng-container>
+        <div
+          class="card empty-state"
+          *ngIf="
+            !state.readingsError &&
+            !readings.firstReading &&
+            !readings.gospelReading
+          "
+        >
+          <h3>The readings aren’t available yet.</h3>
+          <p>Please try again in a moment.</p>
+          <button class="button secondary" (click)="load()">Try again</button>
+        </div>
+      </ng-template>
     </ng-container>
   </section>
   <aside class="card reflection">
@@ -68,7 +130,11 @@
     </p>
     <a
       class="text-link"
-      [href]="sourceUrl"
+      [href]="
+        (state.dailyReadingsResponse &&
+          activeSet(state.dailyReadingsResponse)?.url) ||
+        sourceUrl
+      "
       target="_blank"
       rel="noopener noreferrer"
       >Open the original readings ↗</a

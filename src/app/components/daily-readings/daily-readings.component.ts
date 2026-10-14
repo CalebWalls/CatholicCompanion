@@ -6,6 +6,10 @@ import { AppState } from '../../app.state';
 import { GetReadings } from '../../store/daily-reflections/daily-relflections.actions';
 import { selectDailyReflections } from '../../store/daily-reflections/daily-relflections.selector';
 import { localDateKey } from '../../services/companion.service';
+import {
+  DailyReadingsResponse,
+  ReadingSet,
+} from '../../store/models/daily-readings-response';
 
 @Component({
   selector: 'daily-readings',
@@ -15,6 +19,8 @@ import { localDateKey } from '../../services/companion.service';
 export class DailyReadingsComponent implements OnInit, OnDestroy {
   date = new Date();
   state$ = this.store.select(selectDailyReflections);
+  selectedSetIndex = 0;
+  selectedOptions: Record<number, number> = {};
   sections = [
     { key: 'firstReading' as const, title: 'First reading' },
     { key: 'responsorialPsalm' as const, title: 'Responsorial psalm' },
@@ -77,9 +83,20 @@ export class DailyReadingsComponent implements OnInit, OnDestroy {
   }
 
   load(): void {
+    this.selectedSetIndex = 0;
+    this.selectedOptions = {};
     this.store.dispatch(
       GetReadings({ request: { date: localDateKey(this.date) } }),
     );
+  }
+
+  chooseSet(index: number): void {
+    this.selectedSetIndex = Number(index);
+    this.selectedOptions = {};
+  }
+
+  activeSet(readings: DailyReadingsResponse): ReadingSet | null {
+    return readings.readingSets?.[this.selectedSetIndex] || null;
   }
 
   get sourceUrl(): string {

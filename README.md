@@ -29,13 +29,14 @@ For the initial local setup, a compatible portable Node runtime is also availabl
 ## Features
 
 - Today dashboard with a daily prayer, reading, and charity rhythm. Progress resets by the browser's local calendar date.
-- Live USCCB Mass readings with date navigation, source links, and loading/error/retry states.
+- Live USCCB Mass readings with date navigation, source links, and loading/error/retry states. In-app choices support alternate readings and linked Mass sets (such as Christmas vigil, night, dawn, and day). Extra Easter Vigil readings, psalms, and sequences stay in source order. Source selection notes remain visible; only published readings are shown.
 - Seven-day US liturgical calendar, keeping dates aligned when upstream data is unavailable.
+- Automatic saint-of-the-day card on the home page, sourced from Vatican News. Loads the browser's current date and checks for a new local day every minute while mounted, with loading and retry states. Supports multiple saints and entries without biographies; Vatican News commemorations may differ from the local liturgical calendar.
 - Guided Rosary with all four mystery sets, introductory and concluding prayers, and a bead-by-bead guide. Weekday suggestions can be changed; Sunday customs may vary with the season.
 - Quiet prayer timer with pause, resume, reset, and completion feedback.
 - Intention notebook with prayer/gratitude views. Saving on this browser is optional and can be disabled.
 - Searchable examination of conscience using the existing prompts, plus optional personal sins or notes with add, edit, and remove controls.
-- Confession review guide and a clear-all action. Confession items are held only in memory and disappear on reload.
+- Confession review guide and a clear-all action. Optional “Remember my confession on this browser” saves selections, added personal items, and the time since the last confession in localStorage across refreshes. Saving is off by default. Data is not encrypted or sent to the API; anyone using the same browser profile can access it. Turning saving off removes the saved copy while preserving the current guide; clearing the guide removes both.
 - Shared responsive navigation, keyboard focus indicators, labelled inputs, and reduced-motion support.
 
 ## Privacy and sources

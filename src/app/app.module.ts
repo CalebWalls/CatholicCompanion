@@ -23,6 +23,7 @@ import { DailyReadingsComponent } from './components/daily-readings/daily-readin
 import { IconComponent } from './components/icon/icon.component';
 import { PrayerComponent } from './components/prayer/prayer.component';
 import { IntentionsComponent } from './components/intentions/intentions.component';
+import { SaintOfTheDayComponent } from './components/saint-of-the-day/saint-of-the-day.component';
 
 @NgModule({
   providers: [
@@ -41,6 +42,7 @@ import { IntentionsComponent } from './components/intentions/intentions.componen
     IconComponent,
     PrayerComponent,
     IntentionsComponent,
+    SaintOfTheDayComponent,
   ],
   imports: [
     BrowserModule,

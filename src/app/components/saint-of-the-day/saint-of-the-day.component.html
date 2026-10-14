@@ -1,0 +1,43 @@
+<section
+  class="card saint-card"
+  aria-labelledby="saint-title"
+  aria-live="polite"
+>
+  <div class="saint-heading">
+    <div>
+      <p class="eyebrow">WITNESSES OF FAITH</p>
+      <h2 id="saint-title">Saint of the day</h2>
+    </div>
+    <time>{{ date | date: "MMMM d" }}</time>
+  </div>
+  <p *ngIf="loading" role="status">Meeting today’s witnesses…</p>
+  <div class="notice error" *ngIf="error">
+    <p>{{ error }}</p>
+    <button class="button secondary" (click)="load()">Try again</button>
+  </div>
+  <ng-container *ngIf="response && !error">
+    <article *ngFor="let saint of response.saints">
+      <span class="saint-mark" aria-hidden="true">✧</span>
+      <div>
+        <h3>{{ saint.name }}</h3>
+        <p *ngIf="saint.summary">{{ saint.summary }}</p>
+        <a
+          class="text-link"
+          [href]="saint.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          >{{
+            saint.summary
+              ? "Read their story at Vatican News"
+              : "View at Vatican News"
+          }}
+          ↗</a
+        >
+      </div>
+    </article>
+    <p class="saint-source muted">
+      From {{ response.source }}’s calendar of saints. Local celebrations may
+      differ.
+    </p>
+  </ng-container>
+</section>

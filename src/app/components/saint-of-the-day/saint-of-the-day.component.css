@@ -1,0 +1,50 @@
+.saint-card {
+  margin-top: 24px;
+  background: #f4efe5;
+}
+.saint-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.saint-heading h2 {
+  margin-bottom: 0;
+}
+.saint-heading time {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+article {
+  display: flex;
+  gap: 18px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+article h3 {
+  margin-bottom: 10px;
+  font-size: 27px;
+}
+article p {
+  max-width: 750px;
+  line-height: 1.8;
+}
+.saint-mark {
+  color: var(--gold);
+  font-size: 34px;
+}
+.saint-source {
+  margin: 16px 0 0;
+  font-size: 11px;
+}
+@media (max-width: 600px) {
+  .saint-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .saint-mark {
+    display: none;
+  }
+}

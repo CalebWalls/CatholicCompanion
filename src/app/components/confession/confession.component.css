@@ -22,6 +22,53 @@
 .personal-items > p:not(.eyebrow) {
   font-size: 13px;
 }
+.sin-guidance {
+  margin-bottom: 24px;
+}
+.sin-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.sin-type {
+  border-radius: 8px;
+  padding: 20px;
+}
+.sin-type.mortal {
+  background: #f4ede2;
+}
+.sin-type.venial {
+  background: var(--green-light);
+}
+.sin-type h3 {
+  margin-bottom: 12px;
+}
+.sin-type p,
+.sin-type li,
+.discernment-note,
+.confession-guidance {
+  font-size: 13px;
+}
+.sin-type ol {
+  padding-left: 19px;
+  margin-bottom: 0;
+}
+.sin-type li + li {
+  margin-top: 10px;
+}
+.sin-type p:last-child {
+  margin-bottom: 0;
+}
+.discernment-note {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+.guidance-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+}
 .custom-footer {
   display: flex;
   align-items: center;
@@ -142,6 +189,9 @@
   }
 }
 @media (max-width: 760px) {
+  .sin-comparison {
+    grid-template-columns: 1fr;
+  }
   .custom-list li {
     flex-wrap: wrap;
   }
@@ -154,4 +204,13 @@
   .custom-footer {
     flex-wrap: wrap;
   }
+}
+.save-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.save-choice input {
+  margin-top: 4px;
+  flex-shrink: 0;
 }
