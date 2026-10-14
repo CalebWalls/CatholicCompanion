@@ -55,3 +55,11 @@ npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
 Tests use the existing Jasmine/Karma conventions and cover personal confession items, storage choices, daily progress, reading states, Rosary structure, and timer lifecycle. Production component CSS budgets allow 4 KB before warning and 6 KB before failure; the initial bundle budgets remain unchanged.
 
 The framework versions have been preserved. A supported-framework upgrade should be planned separately from this UI and behavior refactor.
+
+## Automatic Azure deployments
+
+The `Deploy UI to Azure` GitHub Actions workflow tests and builds the UI, then deploys to the existing `CatholicCompanion` App Service whenever code reaches `master` (the repository's default branch). It can also be run manually from the Actions tab on `master`. Failed tests or builds prevent deployment; overlapping deployments run in order.
+
+Authentication uses OpenID Connect with a dedicated user-assigned identity. Trust is limited to `CalebWalls/CatholicCompanion` on `master`, and its Website Contributor role is limited to this UI App Service in the personal Azure subscription. The IDs in the workflow identify that identity and subscription; they are not passwords. No publish-profile secret is stored. Standard hosted runners are free for this public repository, and the existing Azure F1 plan is unchanged.
+
+The workflow packages `dist/apm` with the root `web.config`, and verifies the deployed commit using `deployment.json`. Check the Actions tab for deployment status. To deploy an older version, revert the relevant commit on `master` and push the revert.

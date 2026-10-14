@@ -1,0 +1,65 @@
+name: Deploy UI to Azure
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: catholiccompanion-ui-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NG_CLI_ANALYTICS: 'false'
+      NG_BUILD_MAX_WORKERS: '2'
+      CHROME_BIN: /usr/bin/google-chrome
+    steps:
+      - name: Check out code
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Set up compatible Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '16.20.2'
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Test
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+      - name: Build and package
+        run: |
+          npm run build -- --configuration production
+          cp web.config dist/apm/web.config
+          printf '{"commit":"%s"}\n' "$GITHUB_SHA" > dist/apm/deployment.json
+          cd dist/apm
+          zip -qr ../../deploy.zip .
+      - name: Sign in to personal Azure subscription
+        uses: azure/login@7184910d9eb2b1c5e48f7073824a90609bb9b6d6 # v2
+        with:
+          client-id: 0898c4d8-7244-4ccd-8ad7-5d05354d33eb
+          tenant-id: b7365a4f-230e-4d35-ba0c-b9a8d906edfe
+          subscription-id: 9d240ca7-fc0d-43d8-bc39-fada564240d3
+      - name: Deploy UI
+        run: |
+          az webapp deploy \
+            --subscription 9d240ca7-fc0d-43d8-bc39-fada564240d3 \
+            --resource-group StudySphere \
+            --name CatholicCompanion \
+            --src-path deploy.zip --type zip --clean true --restart true \
+            --async false --track-status false --output none
+      - name: Verify deployed commit
+        run: |
+          curl --fail --silent --show-error --retry 6 --retry-all-errors --retry-delay 10 \
+            'https://catholiccompanion.azurewebsites.net/deployment.json' \
+            --output deployed.json
+          python3 -c 'import json, os; assert json.load(open("deployed.json"))["commit"] == os.environ["GITHUB_SHA"], "The expected UI commit is not live"'
