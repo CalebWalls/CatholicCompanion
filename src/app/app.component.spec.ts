@@ -1,31 +1,23 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { IconComponent } from './components/icon/icon.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule],
+      declarations: [AppComponent, IconComponent],
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'Angular: Getting Started'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('Angular: Getting Started');
-  });
-
-  it('should render title', () => {
+  it('exposes the companion tools through labelled navigation', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to Angular: Getting Started!!');
+    const navigation = fixture.nativeElement.querySelector('nav');
+    expect(navigation.getAttribute('aria-label')).toBe('Main navigation');
+    expect(navigation.querySelectorAll('a').length).toBe(6);
+    expect(navigation.textContent).toContain('Prepare for confession');
+    expect(navigation.textContent).toContain('My intentions');
   });
 });

@@ -4,16 +4,14 @@ import { Router } from '@angular/router'; // Import Router
 @Component({
   selector: 'menu-button',
   templateUrl: './menu-button.component.html',
-  styleUrls: ['./menu-button.component.css']
+  styleUrls: ['./menu-button.component.css'],
 })
 export class MenuButtonComponent {
   title = 'Catholic Companion';
   menuVisible = false;
   today = new Date();
 
-  constructor(private router: Router) 
-  { 
-  } // Inject Router
+  constructor(private router: Router) {} // Inject Router
 
   ngOnInit() {
     this.today = new Date();
@@ -27,10 +25,12 @@ export class MenuButtonComponent {
     this.router.navigate(['/daily-readings']);
   }
 
-  navigateToConfession() { // New function
+  navigateToConfession() {
+    // New function
     this.router.navigate(['/confession']);
   }
-  navigateToLiturgicalCalendar() { // New function
+  navigateToLiturgicalCalendar() {
+    // New function
     this.router.navigate(['/liturgical-calendar']);
   }
 }

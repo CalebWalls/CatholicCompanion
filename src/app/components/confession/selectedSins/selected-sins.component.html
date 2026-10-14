@@ -1,43 +1,74 @@
-<div class="container">
-    <a class="home-link" href="#" (click)="navigateHome()">Home</a>
-
-    <div *ngIf="lastConfessionTime && lastConfessionUnit">
-      <li class="sins-list">Enter the confessional</li>
-      <li class="sins-list">Kneel behind the screen or go in front of the priest</li>
-      <li class="sins-list">Make the sign of the cross and say, "Bless me father for I have sinned, it has been about {{lastConfessionTime}} {{getFormattedUnit()}} since my last confession"</li>
-      <li class="sins-list">Begin confessing your sins listed below:</li>        
-    </div>
-
-    <div *ngIf="selectedSins.length > 0; else noSins">
-      <ol class="sins-list">
-        <li *ngFor="let sin of selectedSins; index as i">
-          {{sin}}
-        </li>
+<div class="page-heading">
+  <p class="eyebrow">RETURN TO MERCY</p>
+  <h1>Your confession guide.</h1>
+  <p>
+    A simple companion to help you remember. Let the priest know if you’d like
+    help.
+  </p>
+</div>
+<a routerLink="/confession" class="text-link">← Back to preparation</a>
+<div class="guide-layout">
+  <section class="card">
+    <p class="eyebrow">BEGIN WITH THE SIGN OF THE CROSS</p>
+    <h3>“Bless me, Father, for I have sinned…”</h3>
+    <p *ngIf="lastConfession.time">
+      It has been about {{ lastConfession.time }} {{ unit }} since my last
+      confession.
+    </p>
+    <p *ngIf="!lastConfession.time">
+      Share approximately how long it has been, if you remember.
+    </p>
+    <div *ngIf="selectedSins.length || customSins.length; else empty">
+      <h2>What I want to bring to confession</h2>
+      <ol>
+        <li *ngFor="let sin of selectedSins">{{ sin }}</li>
+      </ol>
+      <h3 *ngIf="customSins.length">In my own words</h3>
+      <ol class="personal" *ngIf="customSins.length">
+        <li *ngFor="let sin of customSins">{{ sin }}</li>
       </ol>
     </div>
-
-    <div *ngIf="selectedSins.length > 0">
-      <li class="sins-list">Listen to the priest</li>
-      <li class="sins-list">
-        When asked to say your Act of Contrition say the following:
-        <p class="sins-list">
-          O my God, I am heartily sorry for having offended Thee, and I detest all my sins because of thy just punishments,
-           but most of all because they offend Thee, my God, who art all good and deserving of all my love. 
-           I firmly resolve with the help of Thy grace to sin no more and to avoid the near occasion of sin. 
-           Amen.
-        </p>
-      </li>
-      <li class="sins-list">
-        Receive Absolution
-      </li>
-      <li class="sins-list">
-        Leave the confession and fulfill your penance
-      </li>
-      
+    <ng-template #empty
+      ><div class="notice">
+        Your guide is empty. You can still go to confession, or return to add
+        your own items.
+      </div></ng-template
+    >
+    <hr />
+    <h3>Listen. Receive. Begin again.</h3>
+    <p>
+      Listen to the priest, receive your penance, and pray an Act of Contrition
+      when invited. Receive absolution, and remember to carry out your penance.
+    </p>
+    <button
+      class="quiet-button"
+      (click)="confirmClear = true"
+      *ngIf="selectedSins.length || customSins.length"
+    >
+      Clear my private guide
+    </button>
+    <div class="notice" *ngIf="confirmClear">
+      <p>
+        Clear all selections, personal items, and the time since your last
+        confession?
+      </p>
+      <button class="button" (click)="clear()">Clear guide</button>
+      <button class="button secondary" (click)="confirmClear = false">
+        Keep guide
+      </button>
     </div>
-    
-    <ng-template #noSins>
-      <p>No Sins selected</p>
-    </ng-template>
-  </div>
-  
+  </section>
+  <aside class="card">
+    <p class="eyebrow">ACT OF CONTRITION</p>
+    <p class="reading-text">
+      O my God, I am heartily sorry for having offended Thee, and I detest all
+      my sins because of Thy just punishments, but most of all because they
+      offend Thee, my God, who art all good and deserving of all my love. I
+      firmly resolve, with the help of Thy grace, to sin no more and to avoid
+      the near occasion of sin. Amen.
+    </p>
+    <p class="muted">
+      Traditional prayer. Your priest can help if you don’t remember the words.
+    </p>
+  </aside>
+</div>

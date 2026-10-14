@@ -1,11 +1,108 @@
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
-<div class="container">
+<div class="page-heading greeting">
   <div>
-    <h1>Catholic Companion</h1>
+    <p class="eyebrow">ROOTED IN FAITH. PRESENT IN LIFE.</p>
+    <h1>A little closer, every day.</h1>
+    <p>A moment to pause. A place to pray. A companion for the journey.</p>
   </div>
-  <menu-button></menu-button>
-  <div class="main-content">
-    <div class="welcome-section">
-    </div>
-    <div class="center-content">
+  <span class="welcome-mark" aria-hidden="true">✧</span>
 </div>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <span class="hero-label"><span></span> YOUR DAILY INVITATION</span>
+    <h2 id="hero-title">Let faith find a place<br />in your everyday.</h2>
+    <p>
+      You don’t need a perfect routine. Just a willing heart<br
+        class="desktop-break"
+      />
+      and a little time to begin.
+    </p>
+    <a class="button" routerLink="/daily-readings"
+      >Read today’s Word <app-icon name="arrow"></app-icon></a
+    ><a class="hero-secondary" routerLink="/prayer">Take a moment to pray ↗</a>
+  </div>
+  <div
+    class="hero-image"
+    role="img"
+    aria-label="Saint Peter’s Basilica at sunrise"
+  >
+    <div class="image-caption">THE JOURNEY BEGINS WITH A MOMENT</div>
+  </div>
+</section>
+<div class="dashboard-grid">
+  <section class="card daily-plan">
+    <div class="section-heading">
+      <h2>Your daily rhythm</h2>
+      <span class="chip">{{ done.length }} OF 3</span>
+    </div>
+    <p class="muted">Small steps. A deeper connection.</p>
+    <div class="plan-row" *ngFor="let step of plan">
+      <label class="plan-check"
+        ><input
+          type="checkbox"
+          [checked]="done.includes(step.id)"
+          (change)="toggle(step.id)"
+          [attr.aria-label]="'Mark ' + step.title + ' complete'"
+      /></label>
+      <div>
+        <a [routerLink]="step.path">{{ step.title }}</a>
+        <p>{{ step.detail }}</p>
+      </div>
+      <span>{{ step.time }}</span>
+    </div>
+    <div class="plan-footer" aria-live="polite">
+      <span>{{
+        done.length === 3
+          ? "A little faithfulness goes a long way. See you tomorrow."
+          : "There’s no rush. This is your journey."
+      }}</span
+      ><app-icon name="leaf"></app-icon>
+    </div>
+    <p class="muted" *ngIf="!companion.storageAvailable">
+      Progress is available for this visit only; browser storage is unavailable.
+    </p>
+  </section>
+  <section class="card church-today" *ngIf="state$ | async as state">
+    <p class="eyebrow">IN THE LIFE OF THE CHURCH</p>
+    <div class="calendar-stamp">
+      <span>{{ today | date: "MMM" }}</span
+      ><strong>{{ today | date: "d" }}</strong>
+    </div>
+    <h3>
+      {{ state.dateResponse?.liturgicalDate?.[0] || "Today in the Church" }}
+    </h3>
+    <p *ngIf="state.calendarLoading">Finding today’s celebration…</p>
+    <p *ngIf="!state.calendarLoading">
+      {{
+        state.calendarError
+          ? "The calendar is taking a moment. You can still pray, read, and begin again."
+          : "Walk through the year with the Church."
+      }}
+    </p>
+    <a routerLink="/liturgical-calendar" class="text-link"
+      >Explore the liturgical calendar <span aria-hidden="true">→</span></a
+    >
+  </section>
+</div>
+<div class="section-heading">
+  <h2>A space for every part of your faith</h2>
+  <span class="muted">COME AS YOU ARE</span>
+</div>
+<section class="tool-grid" aria-label="Explore your companion">
+  <a class="card tool-card" *ngFor="let tool of tools" [routerLink]="tool.path"
+    ><div class="tool-top">
+      <span class="tool-icon"><app-icon [name]="tool.icon"></app-icon></span
+      ><span aria-hidden="true">↗</span>
+    </div>
+    <p class="eyebrow">{{ tool.tag }}</p>
+    <h3>{{ tool.title }}</h3>
+    <p>{{ tool.description }}</p></a
+  >
+</section>
+<section class="closing-note">
+  <span aria-hidden="true">✝</span>
+  <div>
+    <h3>Faith grows in the ordinary.</h3>
+    <p>One prayer. One kind word. One new beginning.</p>
+  </div>
+  <a routerLink="/prayer" class="text-link">Make a little room today →</a>
+</section>

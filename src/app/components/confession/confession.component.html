@@ -1,159 +1,171 @@
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
-<div class="container">
-  <a class="home-link" href="#" (click)="navigateHome()">Home</a>
-
-  <div class="header">
-    <h1>Examination Of Conscience</h1>
-    <label>Click on each sin you feel you have committed. Then click the submit at the bottom of the page and you will have a list of sins to help guide your confession</label>
-  </div>
-
-  <div class="sins-list-container">
+<div class="page-heading">
+  <p class="eyebrow">MERCY IS A NEW BEGINNING</p>
+  <h1>Prepare with peace.</h1>
+  <p>
+    Take a quiet look at your life. Choose prompts that help you reflect, and
+    add your own words if you wish.
+  </p>
+</div>
+<div class="confession-layout">
+  <section>
+    <div class="notice privacy">
+      <app-icon name="heart"></app-icon>
+      <div>
+        <strong>A private space to prepare.</strong>
+        <p>
+          Your selections and personal items stay in memory for this visit.
+          Reloading clears them. Nothing here is sent to the API.
+        </p>
+      </div>
+    </div>
+    <section class="card personal-items" aria-labelledby="personal-title">
+      <p class="eyebrow">IN YOUR OWN WORDS · OPTIONAL</p>
+      <h2 id="personal-title">Add your own sins or notes.</h2>
+      <p>
+        The checklist can’t cover every situation. Add anything you want to
+        remember for confession.
+      </p>
+      <form (ngSubmit)="saveCustom()">
+        <label class="form-label" for="custom-sin">{{
+          editingIndex === null ? "Personal item" : "Edit your personal item"
+        }}</label
+        ><textarea
+          id="custom-sin"
+          name="customSin"
+          maxlength="500"
+          rows="3"
+          [(ngModel)]="customText"
+          placeholder="Something I would like to bring to confession…"
+          [attr.aria-describedby]="customError ? 'custom-error' : 'custom-hint'"
+        ></textarea>
+        <div class="custom-footer">
+          <span id="custom-hint" class="muted"
+            >{{ customText.length }} / 500</span
+          >
+          <div>
+            <button
+              class="button secondary"
+              type="button"
+              *ngIf="editingIndex !== null"
+              (click)="cancelEdit()"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="button">
+              {{ editingIndex === null ? "Add my own item" : "Save changes" }}
+            </button>
+          </div>
+        </div>
+        <p
+          id="custom-error"
+          class="notice error"
+          role="alert"
+          *ngIf="customError"
+        >
+          {{ customError }}
+        </p>
+      </form>
+      <p class="muted" role="status" *ngIf="status">{{ status }}</p>
+      <ul class="custom-list" *ngIf="customSins.length">
+        <li *ngFor="let item of customSins; let i = index">
+          <span>{{ item }}</span>
+          <div>
+            <button
+              class="quiet-button"
+              (click)="editCustom(i)"
+              [attr.aria-label]="'Edit personal item ' + (i + 1)"
+            >
+              Edit</button
+            ><button
+              class="quiet-button"
+              (click)="removeCustom(i)"
+              [attr.aria-label]="'Remove personal item ' + (i + 1)"
+            >
+              Remove
+            </button>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <div class="section-heading">
+      <h2>An examination of conscience</h2>
+      <span class="chip">{{ selectedSins.length }} SELECTED</span>
+    </div>
+    <p class="muted">
+      Use these existing prompts as a starting point for reflection. A priest
+      can help you discern questions of gravity and responsibility.
+    </p>
+    <label class="form-label" for="search-sins">Find a reflection prompt</label
+    ><input
+      class="search-input"
+      id="search-sins"
+      type="search"
+      [(ngModel)]="search"
+      placeholder="Search kindness, prayer, family…"
+    />
+    <div class="groups">
+      <details
+        class="card group"
+        *ngFor="let group of groups"
+        [open]="search.trim() ? true : null"
+      >
+        <summary>
+          {{ group.title }}
+          <span>{{ filteredItems(group.items).length }} prompts</span>
+        </summary>
+        <div class="prompts">
+          <label *ngFor="let sin of filteredItems(group.items)"
+            ><input
+              type="checkbox"
+              [checked]="selectedSins.includes(sin)"
+              (change)="toggle(sin)"
+            /><span>{{ sin }}</span></label
+          >
+          <p *ngIf="!filteredItems(group.items).length" class="muted">
+            No matching prompts in this section.
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+  <aside class="card summary-card">
+    <p class="eyebrow">YOUR CONFESSION GUIDE</p>
+    <h3>A new beginning awaits.</h3>
+    <p>
+      Prepare a simple list to take with you, then let the priest guide you.
+    </p>
+    <label for="last-time" class="form-label"
+      >Time since your last confession (optional)</label
+    >
     <div class="confession-time">
-      <label>Approximately when was your last confession:</label>
-      <input type="number" min="0" placeholder="Enter number" [(ngModel)]="lastConfessionTime">
-      <select [(ngModel)]="lastConfessionUnit">
+      <input
+        id="last-time"
+        type="number"
+        min="0"
+        max="1000"
+        [(ngModel)]="lastConfessionTime"
+        aria-label="Number of time units since last confession"
+      /><select [(ngModel)]="lastConfessionUnit" aria-label="Unit of time">
         <option value="days">Days</option>
         <option value="weeks">Weeks</option>
         <option value="months">Months</option>
         <option value="years">Years</option>
       </select>
     </div>
-    <div class="sins-list">
-      <label>MORTAL</label>
-      To be a mortal sin it must fulfull these 3 requirements:
-        <ol>
-          <li>
-          Serious matter (sins listed below)
-        </li>
-        <li>
-          Knowledge or firm belief that the act is seriously wrong prior to committing the act
-        </li>
-        <li>
-          Full consent of the will.
-        </li>
-      </ol>
-      <label>First Commandment - I am the Lord your God. You shall not have strange gods before me.</label>
-      <div *ngFor="let sin of sins.slice(0,18); let i = index">
-        <button (click)="onSinClick(i)">{{sin}}</button>
-        <input *ngIf="sinChecked[i]" type="checkbox" id="{{i}}" checked (change)="onSinChange(i, $event)">
-      </div>
-
-      <label>Second Commandment - You shall not take the name of the Lord your God in vain.</label>
-      <div *ngFor="let sin of sins.slice(18,26); let i = index">
-        <button (click)="onSinClick(i+18)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+18]" type="checkbox" id="{{i+18}}" checked (change)="onSinChange(i+18, $event)">
-      </div>
-
-      <label>Third Commandment - Remember to keep holy the Lord’s Day.</label>
-      <div *ngFor="let sin of sins.slice(26,32); let i = index">
-        <button (click)="onSinClick(i+26)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+26]" type="checkbox" id="{{i+26}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Fourth Commandment - Honor your father and mother.</label>
-      <div *ngFor="let sin of sins.slice(32,40); let i = index">
-        <button (click)="onSinClick(i+32)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+32]" type="checkbox" id="{{i+32}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Fith Commandment - You shall not kill.</label>
-      <div *ngFor="let sin of sins.slice(40,63); let i = index">
-        <button (click)="onSinClick(i+40)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+40]" type="checkbox" id="{{i+40}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Sixth Commandment - You shall not commit adultery.</label>
-      <div *ngFor="let sin of sins.slice(63,90); let i = index">
-        <button (click)="onSinClick(i+63)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+63]" type="checkbox" id="{{i+63}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Seventh Commandment - You shall not steal.</label>
-      <div *ngFor="let sin of sins.slice(90,113); let i = index">
-        <button (click)="onSinClick(i+90)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+90]" type="checkbox" id="{{i+90}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Eighth Commandment - You shall not bear false witness against your neighbor.</label>
-      <div *ngFor="let sin of sins.slice(113,118); let i = index">
-        <button (click)="onSinClick(i+113)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+113]" type="checkbox" id="{{i+113}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Ninth Commandment - You shall not desire your neighbor’s wife.</label>
-      <div *ngFor="let sin of sins.slice(118,122); let i = index">
-        <button (click)="onSinClick(i+118)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+118]" type="checkbox" id="{{i+118}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Tenth Commandment - You shall not desire your neighbor’s goods.</label>
-      <div *ngFor="let sin of sins.slice(122,124); let i = index">
-        <button (click)="onSinClick(i+122)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+122]" type="checkbox" id="{{i+122}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>VENIAL</label>
-      <label>First Commandment - I am the Lord your God. You shall not have strange gods before me.</label>
-      <div *ngFor="let sin of sins.slice(124,152); let i = index">
-        <button (click)="onSinClick(i+124)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+124]" type="checkbox" id="{{i+124}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Second Commandment - You shall not take the name of the Lord your God in vain.</label>
-      <div *ngFor="let sin of sins.slice(152,159); let i = index">
-        <button (click)="onSinClick(i+152)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+152]" type="checkbox" id="{{i+152}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Third Commandment - Remember to keep holy the Lord’s Day.</label>
-      <div *ngFor="let sin of sins.slice(159,167); let i = index">
-        <button (click)="onSinClick(i+159)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+159]" type="checkbox" id="{{i+159}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Fourth Commandment - Honor your father and mother.</label>
-      <div *ngFor="let sin of sins.slice(167,191); let i = index">
-        <button (click)="onSinClick(i+167)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+167]" type="checkbox" id="{{i+167}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Fith Commandment - You shall not kill.</label>
-      <div *ngFor="let sin of sins.slice(191,229); let i = index">
-        <button (click)="onSinClick(i+191)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+191]" type="checkbox" id="{{i+192}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Sixth Commandment - You shall not commit adultery.</label>
-      <div *ngFor="let sin of sins.slice(229,239); let i = index">
-        <button (click)="onSinClick(i+229)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+229]" type="checkbox" id="{{i+229}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Seventh Commandment - You shall not steal.</label>
-      <div *ngFor="let sin of sins.slice(239,247); let i = index">
-        <button (click)="onSinClick(i+239)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+239]" type="checkbox" id="{{i+239}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Eighth Commandment - You shall not bear false witness against your neighbor.</label>
-      <div *ngFor="let sin of sins.slice(247,261); let i = index">
-        <button (click)="onSinClick(i+247)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+247]" type="checkbox" id="{{i+247}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Ninth Commandment - You shall not desire your neighbor’s wife.</label>
-      <div *ngFor="let sin of sins.slice(261,266); let i = index">
-        <button (click)="onSinClick(i+261)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+261]" type="checkbox" id="{{i+261}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
-
-      <label>Tenth Commandment - You shall not desire your neighbor’s goods.</label>
-      <div *ngFor="let sin of sins.slice(266,273); let i = index">
-        <button (click)="onSinClick(i+266)">{{sin}}</button>
-        <input *ngIf="sinChecked[i+266]" type="checkbox" id="{{i+266}}" checked (change)="onSinChange(i+26, $event)">
-      </div>
+    <div class="summary-count">
+      <span>{{ selectedSins.length + customSins.length }}</span> items in your
+      guide
     </div>
-  </div>
-
-  <button (click)="onSubmit()">Submit</button>
+    <button class="button" (click)="onSubmit()">Review my guide →</button>
+    <p class="muted">
+      You can return to edit your list at any time during this visit.
+    </p>
+    <a
+      href="https://www.usccb.org/prayer-and-worship/sacraments-and-sacramentals/penance"
+      class="text-link"
+      target="_blank"
+      rel="noopener noreferrer"
+      >About reconciliation at USCCB ↗</a
+    >
+  </aside>
 </div>

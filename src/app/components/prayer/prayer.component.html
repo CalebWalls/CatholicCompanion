@@ -1,0 +1,123 @@
+<div class="page-heading">
+  <p class="eyebrow">BE STILL. BE PRESENT.</p>
+  <h1>Make room for prayer.</h1>
+  <p>
+    Set down the noise for a moment. You’re welcome here, wherever you are on
+    the journey.
+  </p>
+</div>
+<div class="prayer-layout">
+  <section class="card rosary">
+    <div class="section-heading">
+      <h2>A Rosary, one bead at a time.</h2>
+      <app-icon name="spark"></app-icon>
+    </div>
+    <p class="muted">A gentle guide, at your own pace.</p>
+    <label class="form-label" for="mysteries">Mysteries to contemplate</label
+    ><select id="mysteries" [(ngModel)]="set" (change)="selectSet()">
+      <option *ngFor="let name of sets" [value]="name">
+        {{ name }} mysteries
+      </option>
+    </select>
+    <p class="muted">
+      Suggested by weekday. Choose freely; Sunday customs may vary with the
+      season.
+    </p>
+    <div *ngIf="!started">
+      <ol class="mystery-list">
+        <li *ngFor="let mystery of mysteries[set]">{{ mystery }}</li>
+      </ol>
+      <button class="button" (click)="started = true">
+        Begin the Rosary <app-icon name="arrow"></app-icon>
+      </button>
+    </div>
+    <div class="rosary-step" *ngIf="started && !finished">
+      <div class="step-top">
+        <span class="chip">STEP {{ index + 1 }} OF {{ steps.length }}</span
+        ><span class="muted">{{ set }} mysteries</span>
+      </div>
+      <progress
+        [value]="index + 1"
+        [max]="steps.length"
+        aria-label="Rosary progress"
+      ></progress>
+      <p class="eyebrow" *ngIf="current.mystery">{{ current.mystery }}</p>
+      <h3>{{ current.title }}</h3>
+      <div class="beads" *ngIf="current.bead" aria-hidden="true">
+        <span
+          *ngFor="let bead of beads"
+          [class.done]="bead <= (current.bead || 0)"
+        ></span>
+      </div>
+      <p class="reading-text">{{ current.text }}</p>
+      <div class="step-actions">
+        <button
+          class="button secondary"
+          (click)="index = index - 1"
+          [disabled]="index === 0"
+        >
+          ← Previous</button
+        ><button class="button" (click)="next()">
+          {{ index === steps.length - 1 ? "Finish prayer" : "Next prayer →" }}
+        </button>
+      </div>
+    </div>
+    <div class="empty-state" *ngIf="finished" role="status">
+      <app-icon name="leaf"></app-icon>
+      <h3>Carry this peace with you.</h3>
+      <p>
+        Your Rosary is complete. Take a quiet moment before returning to your
+        day.
+      </p>
+      <button class="button secondary" (click)="selectSet()">Pray again</button>
+    </div>
+    <p class="source">
+      Traditional prayers ·
+      <a
+        href="https://www.usccb.org/how-to-pray-the-rosary"
+        target="_blank"
+        rel="noopener noreferrer"
+        >About the Rosary at USCCB ↗</a
+      >
+    </p>
+  </section>
+  <aside>
+    <section class="card stillness">
+      <p class="eyebrow">A MOMENT OF STILLNESS</p>
+      <h3>Just you and God.</h3>
+      <p>No words required. Breathe gently and be present.</p>
+      <label class="form-label" for="minutes">Time to pause</label
+      ><select
+        id="minutes"
+        [(ngModel)]="minutes"
+        (change)="resetTimer()"
+        [disabled]="running"
+      >
+        <option [ngValue]="2">2 minutes</option>
+        <option [ngValue]="5">5 minutes</option>
+        <option [ngValue]="10">10 minutes</option>
+      </select>
+      <div class="timer" role="timer" aria-label="Time remaining">
+        {{ timerDisplay }}
+      </div>
+      <div class="timer-actions">
+        <button class="button" *ngIf="!running" (click)="startTimer()">
+          {{
+            remaining === minutes * 60 || remaining === 0 ? "Begin" : "Continue"
+          }}</button
+        ><button class="button" *ngIf="running" (click)="pauseTimer()">
+          Pause</button
+        ><button class="button secondary" (click)="resetTimer()">Reset</button>
+      </div>
+      <p class="notice" role="status" *ngIf="timerFinished">
+        Your quiet moment is complete.
+      </p>
+    </section>
+    <section class="card prayer-prompt">
+      <app-icon name="leaf"></app-icon>
+      <h3>Bring someone with you.</h3>
+      <p>Offer this time for someone who needs your prayers.</p>
+      <a routerLink="/intentions" class="text-link">Visit your intentions →</a>
+    </section>
+  </aside>
+</div>

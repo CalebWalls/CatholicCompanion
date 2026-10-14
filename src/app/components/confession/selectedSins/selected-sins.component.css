@@ -1,45 +1,36 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Align content to the top */
-    align-items: flex-start; /* Align items to the left */
-    min-height: 100vh;
-    background-color: rgb(79, 85, 88);
-    background-size: cover;
-    background-position: center center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: -1;
-    padding: 20px; /* Add some padding */
-    overflow: auto;
+.guide-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  margin-top: 22px;
+}
+.guide-layout li {
+  padding: 8px 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.guide-layout h2 {
+  margin-top: 30px;
+}
+.guide-layout hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 28px 0;
+}
+.guide-layout aside {
+  height: fit-content;
+  background: #eef0e5;
+}
+.guide-layout aside .reading-text {
+  font-size: 17px;
+}
+.guide-layout .personal {
+  background: var(--green-light);
+  border-radius: 7px;
+  padding: 14px 32px;
+}
+@media (max-width: 1100px) {
+  .guide-layout {
+    grid-template-columns: 1fr;
   }
-
-  .home-link {
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding: 10px;
-    color: rgb(11, 0, 0);
-    font-size: 25px; /* Larger font size */
-    font-weight: bold; /* Bolder font weight */
-    text-decoration: none;
-    transition: color 0.3s; /* Smooth color transition */
-  }
-  .home-link:hover {
-    color: blue;
-  }
-  
-  .sins-list {
-    font-size: 24px; /* Increase font size */
-    max-height: 700px; /* Adjust as needed */
-    overflow-y: auto;
-    overflow-x: auto;
-    margin-top: 100px;
-    font-weight: bold;
-    margin-left: auto;
-  }
-
-  
+}

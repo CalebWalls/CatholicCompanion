@@ -1,4 +1,5 @@
 export interface DateResponse {
-    liturgicalDate: string[];
-    date: Date[];
+  liturgicalDate: string[];
+  date: string[];
+  error?: string;
 }

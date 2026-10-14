@@ -36,15 +36,15 @@
 }
 
 .readings-button {
-  background-image: url('../../../assets/images/dailyreadings.jpg');
+  background-image: url("../../../assets/images/dailyreadings.jpg");
 }
 
 .confession-button {
-  background-image: url('../../../assets/images/confession.jpg');
+  background-image: url("../../../assets/images/confession.jpg");
 }
 
 .calendar-button {
-  background-image: url('../../../assets/images/calendar.jpg');
+  background-image: url("../../../assets/images/calendar.jpg");
 }
 
 .sidebar ul li a {
@@ -75,6 +75,5 @@
   font-size: 16px;
   color: #fbf6f6;
   font-weight: bold; /* Change this to any color you want for the label text */
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
 }
-

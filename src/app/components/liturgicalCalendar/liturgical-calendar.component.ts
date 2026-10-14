@@ -5,19 +5,17 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-liturgical-calendar',
   templateUrl: './liturgical-calendar.component.html',
-  styleUrls: ['./liturgical-calendar.component.css']
+  styleUrls: ['./liturgical-calendar.component.css'],
 })
 export class LiturgicalCalendarComponent {
   menuVisible = false;
 
-  constructor(private router: Router) 
-  { 
-  } // Inject Router
+  constructor(private router: Router) {} // Inject Router
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  navigateHome() { // New function
+  navigateHome() {
+    // New function
     this.router.navigate(['']);
   }
   // You can add any properties or methods you need here

@@ -5,5 +5,5 @@ import { AppState } from 'src/app/app.state';
 // Selector for the date state
 export const selectDailyReflections = createSelector(
   (state: AppState) => state.dailyReflections,
-  (dailyRefections: DailyReflectionsState) => dailyRefections
+  (dailyRefections: DailyReflectionsState) => dailyRefections,
 );

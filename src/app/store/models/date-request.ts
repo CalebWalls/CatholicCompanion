@@ -1,4 +1,3 @@
-    export interface DateRequest {
-      date?: string;
-    }
-  
+export interface DateRequest {
+  date?: string;
+}

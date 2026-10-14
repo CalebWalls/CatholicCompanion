@@ -6,9 +6,8 @@ import { DateRequest } from '../models/date-request';
 import { DateResponse } from '../models/date-response';
 import { DailyReadingsResponse } from '../models/daily-readings-response';
 
-
 @Injectable({
-  providedIn: 'any'
+  providedIn: 'any',
 })
 export class DailyReflectionsService {
   private baseUrl = environment.apiBaseUrl;
@@ -17,11 +16,14 @@ export class DailyReflectionsService {
 
   constructor(private http: HttpClient) {}
 
-  liturgicalCalendar(request : DateRequest): Observable<DateResponse> {
-    return this.http.post<DateResponse>(this.liturgicalDateUrl,  request );
+  liturgicalCalendar(request: DateRequest): Observable<DateResponse> {
+    return this.http.post<DateResponse>(this.liturgicalDateUrl, request);
   }
 
-  dailyReadings(request : DateRequest): Observable<DailyReadingsResponse> {
-    return this.http.post<DailyReadingsResponse>(this.dailyReadingsUrl,  request );
+  dailyReadings(request: DateRequest): Observable<DailyReadingsResponse> {
+    return this.http.post<DailyReadingsResponse>(
+      this.dailyReadingsUrl,
+      request,
+    );
   }
 }

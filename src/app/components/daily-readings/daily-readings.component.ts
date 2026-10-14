@@ -1,80 +1,94 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { distinctUntilChanged, map, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Observable, map, tap } from 'rxjs';
-import { AppState } from 'src/app/app.state';
-import { GetReadings } from 'src/app/store/daily-reflections/daily-relflections.actions';
-import { selectDailyReflections } from 'src/app/store/daily-reflections/daily-relflections.selector';
-import { DailyReadingsResponse } from 'src/app/store/models/daily-readings-response';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AppState } from '../../app.state';
+import { GetReadings } from '../../store/daily-reflections/daily-relflections.actions';
+import { selectDailyReflections } from '../../store/daily-reflections/daily-relflections.selector';
+import { localDateKey } from '../../services/companion.service';
 
 @Component({
   selector: 'daily-readings',
   templateUrl: './daily-readings.component.html',
-  styleUrls: ['./daily-readings.component.css']
+  styleUrls: ['./daily-readings.component.css'],
 })
-export class DailyReadingsComponent implements OnInit {
-  date: Date = new Date(); // Initialize date to today's date
-  public dailyReadingsResponse$: Observable<DailyReadingsResponse | null> | undefined;
+export class DailyReadingsComponent implements OnInit, OnDestroy {
+  date = new Date();
+  state$ = this.store.select(selectDailyReflections);
+  sections = [
+    { key: 'firstReading' as const, title: 'First reading' },
+    { key: 'responsorialPsalm' as const, title: 'Responsorial psalm' },
+    { key: 'secondReading' as const, title: 'Second reading' },
+    { key: 'alleluiaVerse' as const, title: 'Gospel acclamation' },
+    { key: 'gospelReading' as const, title: 'Gospel' },
+  ];
 
-  constructor(private store: Store<AppState>, private router: Router, private sanitizer: DomSanitizer) { }
+  private dateSubscription?: Subscription;
 
-  navigateHome() {
-    this.router.navigate(['']);
+  constructor(
+    private store: Store<AppState>,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    this.dateSubscription = this.route.queryParamMap
+      .pipe(
+        map((params) => params.get('date')),
+        distinctUntilChanged(),
+      )
+      .subscribe((date) => {
+        this.date = this.dateFromUrl(date);
+        this.load();
+      });
   }
 
-  formatText(text: string): SafeHtml {
-    const formattedText = text.replace(/R\.\s(.*?[.!?])/g, '<br><strong style="font-weight: bold; color: #000;">R. $1</strong><br>');
-    return this.sanitizer.bypassSecurityTrustHtml(formattedText);
+  ngOnDestroy(): void {
+    this.dateSubscription?.unsubscribe();
   }
 
-  incrementDate() {
-    this.date.setDate(this.date.getDate() + 1); // Increment the date by 1 day
-    this.adjustDateToTimeZone();
-    this.getReadings();
+  changeDate(days: number): void {
+    const next = new Date(this.date);
+    next.setDate(next.getDate() + days);
+    this.navigateToDate(next);
   }
 
-  decrementDate() {
-    this.date.setDate(this.date.getDate() - 1); // Decrement the date by 1 day
-    this.adjustDateToTimeZone();
-    this.getReadings();
+  today(): void {
+    this.navigateToDate(new Date());
   }
 
-  adjustDateToTimeZone() {
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const localDateString = this.date.toLocaleString('en-US', { timeZone, hour12: false });
-    this.date = new Date(localDateString);
+  private navigateToDate(date: Date): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { date: localDateKey(date) },
+      queryParamsHandling: 'merge',
+    });
   }
 
-  getReadings() {
-    const formattedDate = this.formatDateToLocalISOString(this.date);
-    this.store.dispatch(GetReadings({ request: { date: formattedDate } }));
-    this.dailyReadingsResponse$ = this.store.select(selectDailyReflections).pipe(
-      tap(state => console.log('Selected state:', state.dailyReadingsResponse)),
-      map(readings => readings?.dailyReadingsResponse)
+  private dateFromUrl(value: string | null): Date {
+    if (value && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      const [year, month, day] = value.split('-').map(Number);
+      const date = new Date(year, month - 1, day);
+      if (year >= 1900 && year <= 2100 && localDateKey(date) === value) {
+        return date;
+      }
+    }
+    return new Date();
+  }
+
+  load(): void {
+    this.store.dispatch(
+      GetReadings({ request: { date: localDateKey(this.date) } }),
     );
   }
 
-  formatDateToLocalISOString(date: Date): string {
-    const pad = (num: number) => num.toString().padStart(2, '0');
-    const year = date.getFullYear();
-    const month = pad(date.getMonth() + 1);
-    const day = pad(date.getDate());
-    const hours = pad(date.getHours());
-    const minutes = pad(date.getMinutes());
-    const seconds = pad(date.getSeconds());
-    const milliseconds = date.getMilliseconds().toString().padStart(3, '0');
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
-  }
-
-  navigateToUrl(url: string | undefined): void {
-    if (url) {
-      window.open(url, "_blank");
-    }
-  }
-
-  ngOnInit(): void {
-    this.adjustDateToTimeZone(); // Adjust the date to the user's time zone
-    this.getReadings(); // Fetch the readings when the component is initialized
+  get sourceUrl(): string {
+    return (
+      'https://bible.usccb.org/bible/readings/' +
+      localDateKey(this.date).slice(5, 7) +
+      localDateKey(this.date).slice(8, 10) +
+      localDateKey(this.date).slice(2, 4) +
+      '.cfm'
+    );
   }
 }

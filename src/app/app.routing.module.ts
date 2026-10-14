@@ -6,18 +6,22 @@ import { HomeComponent } from './components/home/home.component';
 import { LiturgicalCalendarComponent } from './components/liturgicalCalendar/liturgical-calendar.component';
 import { SelectedSinsComponent } from './components/confession/selectedSins/selected-sins.component';
 import { DailyReadingsComponent } from './components/daily-readings/daily-readings.component';
+import { PrayerComponent } from './components/prayer/prayer.component';
+import { IntentionsComponent } from './components/intentions/intentions.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'confession', component: ConfessionComponent },
   { path: 'liturgical-calendar', component: LiturgicalCalendarComponent },
   { path: 'selected-sins', component: SelectedSinsComponent },
-  { path: 'daily-readings', component: DailyReadingsComponent }
-  // more routes...
+  { path: 'daily-readings', component: DailyReadingsComponent },
+  { path: 'prayer', component: PrayerComponent },
+  { path: 'intentions', component: IntentionsComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

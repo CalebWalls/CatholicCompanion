@@ -1,6 +1,53 @@
-<div *ngFor="let item of liturgicalDatesWithDate$ | async">
-  <div class="date-widget">
-    <h1>{{ item.date | date }}</h1>
-    <h2>{{ item.liturgicalDate }}</h2>
-  </div>
+<div class="date-navigation">
+  <button (click)="changeWeek(-7)" aria-label="Previous week">←</button
+  ><time>Week of {{ date | date: "MMMM d, y" }}</time
+  ><button (click)="changeWeek(7)" aria-label="Next week">→</button
+  ><button (click)="today()">This week</button>
 </div>
+<section
+  class="card calendar-list"
+  *ngIf="state$ | async as state"
+  aria-live="polite"
+>
+  <p *ngIf="state.calendarLoading">Loading this week’s celebrations…</p>
+  <div *ngIf="state.calendarError" class="notice error">
+    <p>{{ state.calendarError }}</p>
+    <button class="button secondary" (click)="load()">Try again</button>
+    <a
+      href="https://bible.usccb.org/daily-bible-reading"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-link"
+      >View USCCB calendar ↗</a
+    >
+  </div>
+  <ng-container *ngIf="state.dateResponse as calendar"
+    ><article
+      class="calendar-row"
+      *ngFor="let celebration of calendar.liturgicalDate; let i = index"
+    >
+      <div class="day">
+        <span>{{ calendar.date[i] | date: "EEE" }}</span
+        ><strong>{{ calendar.date[i] | date: "d" }}</strong
+        ><span>{{ calendar.date[i] | date: "MMM" }}</span>
+      </div>
+      <div>
+        <h3>{{ celebration }}</h3>
+        <p>{{ calendar.date[i] | date: "fullDate" }}</p>
+        <a
+          *ngIf="calendar.date[i]"
+          class="text-link readings-link"
+          routerLink="/daily-readings"
+          [queryParams]="{ date: calendar.date[i].slice(0, 10) }"
+          [attr.aria-label]="
+            'Readings for ' + (calendar.date[i] | date: 'fullDate')
+          "
+          >Readings for this day →</a
+        >
+      </div>
+    </article>
+    <p *ngIf="!state.calendarError && !calendar.liturgicalDate?.length">
+      No celebrations were returned for this week.
+    </p></ng-container
+  >
+</section>

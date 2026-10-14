@@ -1,0 +1,118 @@
+<div class="page-heading">
+  <p class="eyebrow">HOLD THEM IN YOUR HEART</p>
+  <h1>Someone to pray for.</h1>
+  <p>
+    For the people you love, the things you hope for, and the gifts you’re
+    grateful for.
+  </p>
+</div>
+<div class="intentions-layout">
+  <section>
+    <form class="card" (ngSubmit)="add()">
+      <label class="form-label" for="intention"
+        >What would you like to bring to prayer?</label
+      ><textarea
+        id="intention"
+        name="intention"
+        rows="4"
+        maxlength="500"
+        [(ngModel)]="text"
+        placeholder="For a friend who needs peace…"
+        required
+      ></textarea>
+      <div class="form-bottom">
+        <span class="muted">{{ text.length }} / 500</span
+        ><button class="button" type="submit" [disabled]="!text.trim()">
+          Add intention <app-icon name="leaf"></app-icon>
+        </button>
+      </div>
+      <label class="save-choice"
+        ><input
+          type="checkbox"
+          name="save"
+          [(ngModel)]="save"
+          (change)="changeStorage()"
+        />
+        Remember intentions on this browser</label
+      >
+      <p class="muted">
+        Without this option, intentions disappear when you reload. Saved
+        intentions are visible to anyone using this browser profile.
+      </p>
+    </form>
+    <p class="notice" role="status" *ngIf="status">{{ status }}</p>
+    <p class="notice error" *ngIf="!companion.storageAvailable">
+      Browser storage is unavailable. Your intentions are available during this
+      visit only.
+    </p>
+    <div class="section-heading">
+      <h2>Your intentions</h2>
+      <label
+        ><span class="sr-label">Show </span
+        ><select aria-label="Filter intentions" [(ngModel)]="filter">
+          <option value="all">All intentions</option>
+          <option value="active">In my prayers</option>
+          <option value="answered">In gratitude</option>
+        </select></label
+      >
+    </div>
+    <div class="card empty-state" *ngIf="!visibleIntentions.length">
+      <app-icon name="leaf"></app-icon>
+      <h3>A little space for what matters.</h3>
+      <p>
+        {{
+          companion.intentions.length
+            ? "No intentions in this view yet."
+            : "Your first intention can be as simple as a name."
+        }}
+      </p>
+    </div>
+    <article class="card intention" *ngFor="let item of visibleIntentions">
+      <span class="chip">{{
+        item.answered ? "IN GRATITUDE" : "IN MY PRAYERS"
+      }}</span>
+      <p>{{ item.text }}</p>
+      <div>
+        <time class="muted">{{ item.created | date: "MMM d, y" }}</time
+        ><button class="quiet-button" (click)="toggle(item)">
+          {{
+            item.answered ? "Return to prayers" : "Mark with gratitude"
+          }}</button
+        ><button
+          class="quiet-button"
+          (click)="remove(item.id)"
+          [attr.aria-label]="'Remove intention: ' + item.text"
+        >
+          Remove
+        </button>
+      </div>
+    </article>
+    <button
+      *ngIf="companion.intentions.length && !confirmClear"
+      class="quiet-button"
+      (click)="confirmClear = true"
+    >
+      Clear all intentions
+    </button>
+    <div class="notice" *ngIf="confirmClear">
+      <p>Remove all intentions from this visit and this browser?</p>
+      <button class="button" (click)="clear()">Yes, clear all</button>
+      <button class="button secondary" (click)="confirmClear = false">
+        Keep them
+      </button>
+    </div>
+  </section>
+  <aside class="card">
+    <p class="eyebrow">A PRAYER OF INTERCESSION</p>
+    <h3>You don’t have to find the perfect words.</h3>
+    <p>
+      Bring a name to mind. Offer their needs to God. Leave a moment of silence.
+    </p>
+    <a routerLink="/prayer" class="text-link">Make time for prayer →</a>
+    <hr />
+    <p class="muted">
+      Intentions stay in this browser. They are never sent to the API. Browser
+      storage is not encrypted; choose what you feel comfortable writing.
+    </p>
+  </aside>
+</div>
