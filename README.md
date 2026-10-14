@@ -35,7 +35,7 @@ For the initial local setup, a compatible portable Node runtime is also availabl
 - Quiet prayer timer with pause, resume, reset, and completion feedback.
 - Intention notebook with prayer/gratitude views. Saving on this browser is optional and can be disabled.
 - Searchable examination of conscience using the existing prompts, plus optional personal sins or notes with add, edit, and remove controls.
-- Confession review guide and a clear-all action. Confession items are held only in memory and disappear on reload.
+- Confession review guide and a clear-all action. Optional “Remember my confession on this browser” saves selections, added personal items, and the time since the last confession in localStorage across refreshes. Saving is off by default. Data is not encrypted or sent to the API; anyone using the same browser profile can access it. Turning saving off removes the saved copy while preserving the current guide; clearing the guide removes both.
 - Shared responsive navigation, keyboard focus indicators, labelled inputs, and reduced-motion support.
 
 ## Privacy and sources

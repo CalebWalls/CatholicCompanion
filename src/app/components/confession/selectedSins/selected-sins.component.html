@@ -7,6 +7,30 @@
   </p>
 </div>
 <a routerLink="/confession" class="text-link">← Back to preparation</a>
+<div class="notice storage-choice">
+  <label class="save-choice">
+    <input
+      type="checkbox"
+      [ngModel]="sinService.rememberConfession"
+      (ngModelChange)="sinService.setRememberConfession($event)"
+    />
+    <strong>Remember my confession on this browser</strong>
+  </label>
+  <p class="muted">
+    Saved data is not encrypted; anyone using this browser profile can read it.
+    Nothing here is sent to the API.
+  </p>
+  <p role="status" *ngIf="!sinService.storageError">
+    {{
+      sinService.rememberConfession
+        ? "Your guide is saved on this browser and will return after a refresh."
+        : "Saving is off. Refreshing will clear your guide."
+    }}
+  </p>
+  <p class="notice error" role="alert" *ngIf="sinService.storageError">
+    {{ sinService.storageError }}
+  </p>
+</div>
 <div class="guide-layout">
   <section class="card">
     <p class="eyebrow">BEGIN WITH THE SIGN OF THE CROSS</p>
@@ -40,17 +64,13 @@
       Listen to the priest, receive your penance, and pray an Act of Contrition
       when invited. Receive absolution, and remember to carry out your penance.
     </p>
-    <button
-      class="quiet-button"
-      (click)="confirmClear = true"
-      *ngIf="selectedSins.length || customSins.length"
-    >
+    <button class="quiet-button" (click)="confirmClear = true">
       Clear my private guide
     </button>
     <div class="notice" *ngIf="confirmClear">
       <p>
         Clear all selections, personal items, and the time since your last
-        confession?
+        confession, including the saved copy on this browser?
       </p>
       <button class="button" (click)="clear()">Clear guide</button>
       <button class="button secondary" (click)="confirmClear = false">

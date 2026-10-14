@@ -13,9 +13,46 @@
       <div>
         <strong>A private space to prepare.</strong>
         <p>
-          Your selections and personal items stay in memory for this visit.
-          Reloading clears them. Nothing here is sent to the API.
+          Nothing here is sent to the API. Choose whether to keep your guide
+          after a refresh.
         </p>
+        <label class="save-choice">
+          <input
+            type="checkbox"
+            [ngModel]="sinService.rememberConfession"
+            (ngModelChange)="sinService.setRememberConfession($event)"
+          />
+          <strong>Remember my confession on this browser</strong>
+        </label>
+        <p class="muted">
+          Saves checked prompts, added personal items, and the time since your
+          last confession automatically. Saved data is not encrypted; anyone
+          using this browser profile can read it. Unfinished personal item edits
+          are not saved.
+        </p>
+        <p role="status" *ngIf="!sinService.storageError">
+          {{
+            sinService.rememberConfession
+              ? "Your guide is saved on this browser and will return after a refresh."
+              : "Saving is off. Refreshing will clear your guide."
+          }}
+        </p>
+        <p class="notice error" role="alert" *ngIf="sinService.storageError">
+          {{ sinService.storageError }}
+        </p>
+        <button class="quiet-button" (click)="confirmClear = true">
+          Clear my private guide
+        </button>
+        <div *ngIf="confirmClear">
+          <p>
+            Clear all selections, personal items, and the time since your last
+            confession, including the saved copy on this browser?
+          </p>
+          <button class="button" (click)="clear()">Clear guide</button>
+          <button class="button secondary" (click)="confirmClear = false">
+            Keep guide
+          </button>
+        </div>
       </div>
     </div>
     <section class="card sin-guidance" aria-labelledby="sin-guidance-title">
@@ -200,8 +237,13 @@
         min="0"
         max="1000"
         [(ngModel)]="lastConfessionTime"
+        (ngModelChange)="saveLastConfession()"
         aria-label="Number of time units since last confession"
-      /><select [(ngModel)]="lastConfessionUnit" aria-label="Unit of time">
+      /><select
+        [(ngModel)]="lastConfessionUnit"
+        (ngModelChange)="saveLastConfession()"
+        aria-label="Unit of time"
+      >
         <option value="days">Days</option>
         <option value="weeks">Weeks</option>
         <option value="months">Months</option>

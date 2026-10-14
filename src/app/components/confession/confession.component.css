@@ -205,3 +205,12 @@
     flex-wrap: wrap;
   }
 }
+.save-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.save-choice input {
+  margin-top: 4px;
+  flex-shrink: 0;
+}

@@ -34,3 +34,16 @@
     grid-template-columns: 1fr;
   }
 }
+.storage-choice {
+  display: block;
+  margin-top: 22px;
+}
+.save-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.save-choice input {
+  margin-top: 4px;
+  flex-shrink: 0;
+}
