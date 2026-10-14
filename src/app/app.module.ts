@@ -2,7 +2,10 @@ import { StoreModule } from '@ngrx/store';
 import { reducer } from './store/daily-reflections/daily-relflections.reducer';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { DailyReflectionsService } from './store/daily-reflections/daily-relflections.service';
@@ -26,10 +29,6 @@ import { IntentionsComponent } from './components/intentions/intentions.componen
 import { SaintOfTheDayComponent } from './components/saint-of-the-day/saint-of-the-day.component';
 
 @NgModule({
-  providers: [
-    DailyReflectionsService,
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
-  ],
   declarations: [
     AppComponent,
     HomeComponent,
@@ -44,9 +43,9 @@ import { SaintOfTheDayComponent } from './components/saint-of-the-day/saint-of-t
     IntentionsComponent,
     SaintOfTheDayComponent,
   ],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
-    HttpClientModule,
     FormsModule,
     AppRoutingModule,
     StoreModule.forRoot({ dailyReflections: reducer }),
@@ -55,6 +54,10 @@ import { SaintOfTheDayComponent } from './components/saint-of-the-day/saint-of-t
     MatInputModule,
     MatButtonModule,
   ],
-  bootstrap: [AppComponent],
+  providers: [
+    DailyReflectionsService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
 })
 export class AppModule {}
