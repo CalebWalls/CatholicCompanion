@@ -46,3 +46,29 @@
     position: static;
   }
 }
+.mass-choice {
+  margin-bottom: 24px;
+  background: var(--green-light);
+}
+.mass-choice select,
+.reading-options select {
+  width: 100%;
+  max-width: 100%;
+}
+.celebration-heading {
+  margin-bottom: 24px;
+}
+.source-note {
+  display: block;
+  white-space: pre-line;
+}
+.reading-options {
+  padding: 16px;
+  margin: 16px 0;
+  border-radius: 8px;
+  background: var(--green-light);
+}
+.scripture-reference {
+  font-weight: 600;
+  color: var(--green);
+}

@@ -11,6 +11,11 @@ import { localDateKey } from '../../services/companion.service';
 import { GetReadings } from '../../store/daily-reflections/daily-relflections.actions';
 import { initialState } from '../../store/daily-reflections/daily-relflections.reducer';
 import { DailyReadingsComponent } from './daily-readings.component';
+import { TestBed } from '@angular/core/testing';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('Daily readings date navigation', () => {
   let params: BehaviorSubject<ParamMap>;
@@ -74,5 +79,83 @@ describe('Daily readings date navigation', () => {
     store.dispatch.calls.reset();
     params.next(convertToParamMap({ date: '2026-11-03' }));
     expect(store.dispatch).not.toHaveBeenCalled();
+  });
+});
+
+// Exercise the actual template so selecting a Mass or alternate reading updates its text.
+
+describe('Daily readings choices', () => {
+  beforeEach(async () => {
+    const state = {
+      ...initialState,
+      dailyReadingsResponse: {
+        readingSets: [
+          {
+            title: 'Vigil Mass',
+            url: 'https://example.com/vigil',
+            sections: [
+              {
+                key: 'gospelReading',
+                title: 'Gospel',
+                options: [
+                  { reference: 'Long reference', text: 'Long gospel' },
+                  { reference: 'Short reference', text: 'Short gospel' },
+                ],
+              },
+            ],
+          },
+          {
+            title: 'Mass during the Day',
+            url: 'https://example.com/day',
+            sections: [
+              {
+                key: 'gospelReading',
+                title: 'Gospel',
+                options: [{ text: 'Day gospel' }],
+              },
+            ],
+          },
+        ],
+      },
+    };
+    await TestBed.configureTestingModule({
+      declarations: [DailyReadingsComponent],
+      imports: [CommonModule, FormsModule, RouterTestingModule],
+      providers: [
+        {
+          provide: Store,
+          useValue: { select: () => of(state), dispatch: () => {} },
+        },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  });
+
+  it('renders and switches alternate readings and Masses without leaving the page', async () => {
+    const fixture = TestBed.createComponent(DailyReadingsComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const page: HTMLElement = fixture.nativeElement;
+    expect(page.textContent).toContain('Long gospel');
+    expect(page.textContent).not.toContain('Short gospel');
+    const options = page.querySelector(
+      '#reading-option-0',
+    ) as HTMLSelectElement;
+    options.selectedIndex = 1;
+    options.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+    expect(page.textContent).toContain('Short gospel');
+    expect(page.textContent).not.toContain('Long gospel');
+    const mass = page.querySelector('#reading-set') as HTMLSelectElement;
+    mass.selectedIndex = 1;
+    mass.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+    expect(page.textContent).toContain('Day gospel');
+    expect(page.textContent).not.toContain('Short gospel');
+    expect(page.querySelector('#reading-option-0')).toBeNull();
+    expect(
+      page.querySelector('aside a[target="_blank"]')?.getAttribute('href'),
+    ).toBe('https://example.com/day');
+    fixture.destroy();
   });
 });
