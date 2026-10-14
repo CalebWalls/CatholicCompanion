@@ -1,27 +1,77 @@
-<div class="container">
-  <div class="navigation">
-    <button (click)="decrementDate()">←</button>
-    <div class="date-display">{{ date | date:'fullDate' }}</div>
-    <button (click)="incrementDate()">→</button>
-  </div>
-  <a class="home-link" href="#" (click)="navigateHome()">Home</a>
-  <div *ngIf="(dailyReadingsResponse$ | async) as dailyReadingsResponse" class="reading-card">
-    <h2 *ngIf="dailyReadingsResponse.firstReading">First Reading</h2>
-    <p *ngIf="dailyReadingsResponse.firstReading">{{ dailyReadingsResponse.firstReading }}</p>
-
-    <h2 *ngIf="dailyReadingsResponse.responsorialPsalm">Responsorial Psalm</h2>
-    <p *ngIf="dailyReadingsResponse.responsorialPsalm" [innerHTML]="formatText(dailyReadingsResponse.responsorialPsalm)"></p>
-
-    <h2 *ngIf="dailyReadingsResponse.secondReading">Second Reading</h2>
-    <p *ngIf="dailyReadingsResponse.secondReading">{{ dailyReadingsResponse.secondReading }}</p>
-
-    <h2 *ngIf="dailyReadingsResponse.alleluiaVerse">Alleluia Verse</h2>
-    <p *ngIf="dailyReadingsResponse.alleluiaVerse" [innerHTML]="formatText(dailyReadingsResponse.alleluiaVerse)"></p>
-
-    <h2 *ngIf="dailyReadingsResponse.gospelReading">Gospel Reading</h2>
-    <p *ngIf="dailyReadingsResponse.gospelReading">{{ dailyReadingsResponse.gospelReading }}</p>
-
-    <h2 *ngIf="dailyReadingsResponse.firstReading === null">Multiple Readings</h2>
-    <button *ngIf="dailyReadingsResponse?.firstReading === null" (click)="navigateToUrl(dailyReadingsResponse.url)">Choose Reading</button>
-  </div>
+<div class="page-heading">
+  <p class="eyebrow">LISTEN. REFLECT. CARRY IT WITH YOU.</p>
+  <h1>The Word for your day.</h1>
+  <p>Read slowly. Notice what stays with you. Let it become a prayer.</p>
+</div>
+<div class="date-navigation">
+  <button (click)="changeDate(-1)" aria-label="Previous day">←</button
+  ><time>{{ date | date: "EEEE, MMMM d, y" }}</time
+  ><button (click)="changeDate(1)" aria-label="Next day">→</button
+  ><button (click)="today()">Today</button>
+</div>
+<div class="readings-layout" *ngIf="state$ | async as state">
+  <section aria-label="Daily Mass readings" aria-live="polite">
+    <div class="card empty-state" *ngIf="state.readingsLoading">
+      <app-icon name="book"></app-icon>
+      <h3>Opening today’s readings…</h3>
+      <p>Taking a moment to bring you the Word.</p>
+    </div>
+    <div class="notice error" *ngIf="state.readingsError">
+      <p>{{ state.readingsError }}</p>
+      <button class="button secondary" (click)="load()">Try again</button>
+      <a
+        class="text-link"
+        [href]="sourceUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Read at USCCB ↗</a
+      >
+    </div>
+    <ng-container *ngIf="state.dailyReadingsResponse as readings">
+      <ng-container *ngFor="let section of sections"
+        ><article class="card reading-card" *ngIf="readings[section.key]">
+          <p class="eyebrow">{{ section.title }}</p>
+          <p class="reading-text">{{ readings[section.key] }}</p>
+        </article></ng-container
+      >
+      <div
+        class="card empty-state"
+        *ngIf="
+          !state.readingsError &&
+          !readings.firstReading &&
+          !readings.gospelReading
+        "
+      >
+        <h3>Choose the readings for this celebration.</h3>
+        <p>Some days have more than one set of readings.</p>
+        <a
+          class="button"
+          [href]="readings.url || sourceUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          >View readings at USCCB ↗</a
+        >
+      </div>
+    </ng-container>
+  </section>
+  <aside class="card reflection">
+    <span class="tool-icon"><app-icon name="leaf"></app-icon></span>
+    <p class="eyebrow">MAKE IT PERSONAL</p>
+    <h3>Stay with one word.</h3>
+    <p>What word or phrase catches your attention?</p>
+    <p>What might God be inviting you to do with it today?</p>
+    <a routerLink="/prayer" class="text-link">Sit with it in prayer →</a>
+    <hr />
+    <p class="muted">
+      Readings from the United States Conference of Catholic Bishops. The
+      calendar follows US celebrations.
+    </p>
+    <a
+      class="text-link"
+      [href]="sourceUrl"
+      target="_blank"
+      rel="noopener noreferrer"
+      >Open the original readings ↗</a
+    >
+  </aside>
 </div>

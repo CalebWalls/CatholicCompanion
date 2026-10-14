@@ -1,20 +1,54 @@
-.date-widget {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(59, 55, 55);
-    color: rgb(251, 253, 251);
-    width: 300px;
-    height: 120px;
-    border-radius: 25px;
-    margin: 4px 2px;
+.calendar-list {
+  max-width: 900px;
+}
+.calendar-row {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  padding: 23px 5px;
+  border-bottom: 1px solid var(--line);
+}
+.calendar-row:last-child {
+  border-bottom: 0;
+}
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 65px;
+  flex-shrink: 0;
+  color: var(--green);
+}
+.day span {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.day strong {
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: 400;
+}
+.calendar-row h3 {
+  margin-bottom: 9px;
+  font-size: 28px;
+}
+.calendar-row p {
+  font-size: 12px;
+  margin: 0;
+}
+.readings-link {
+  display: inline-block;
+  margin-top: 12px;
+}
+@media (max-width: 760px) {
+  .calendar-row {
+    gap: 12px;
   }
-
-  h1 {
-    font-size: 20px;
+  .calendar-row h3 {
+    font-size: 24px;
   }
-  
-  h2 {
-    font-size: 20px;
+  .day {
+    width: 45px;
   }
-  
+}

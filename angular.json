@@ -38,8 +38,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "4kb",
+                  "maximumError": "6kb"
                 }
               ],
               "fileReplacements": [
@@ -100,6 +100,6 @@
     }
   },
   "cli": {
-    "analytics": "a5a3699a-303c-4bde-88b8-3260d96a6683"
+    "analytics": false
   },
 }

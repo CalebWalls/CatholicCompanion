@@ -1,34 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SinService } from './sin-service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-selected-sins',
   templateUrl: './selected-sins.component.html',
-  styleUrls: ['./selected-sins.component.css']
+  styleUrls: ['./selected-sins.component.css'],
 })
-export class SelectedSinsComponent implements OnInit {
-  selectedSins: string[] = [];
-  lastConfessionTime: number = 0;
-  lastConfessionUnit: string = '';
+export class SelectedSinsComponent {
+  selectedSins = this.sinService.getSelectedSins();
+  customSins = this.sinService.getCustomSins();
+  lastConfession = this.sinService.getLastConfession();
+  confirmClear = false;
+  constructor(private sinService: SinService) {}
 
-  constructor(private router: Router, private sinService: SinService) { } // Inject the service
-
-  navigateHome() {
-    this.router.navigate(['']);
+  get unit(): string {
+    return this.lastConfession.time === 1
+      ? this.lastConfession.unit.slice(0, -1)
+      : this.lastConfession.unit;
   }
 
-  ngOnInit() {
-    this.selectedSins = this.sinService.getSelectedSins();
-    
-    const lastConfession = this.sinService.getLastConfession(); // Get the last confession time from the service
-    this.lastConfessionTime = lastConfession.time;
-    this.lastConfessionUnit = lastConfession.unit;
-  // Get the selected sins from the service
+  clear(): void {
+    this.sinService.clear();
+    this.selectedSins = [];
+    this.customSins = [];
+    this.lastConfession = this.sinService.getLastConfession();
+    this.confirmClear = false;
   }
-
-  getFormattedUnit() {
-    return this.lastConfessionTime === 1 ? this.lastConfessionUnit.slice(0, -1) : this.lastConfessionUnit;
-  }
-  
 }

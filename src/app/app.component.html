@@ -1,0 +1,48 @@
+<a class="skip-link" href="#main-content" (click)="skipToContent($event, mainContent)">Skip to content</a>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a routerLink="/" class="brand"
+      ><span class="brand-cross" aria-hidden="true">✝</span
+      ><span>Catholic<br /><strong>Companion</strong></span></a
+    >
+    <p class="nav-caption">A LITTLE CLOSER, EVERY DAY</p>
+    <nav aria-label="Main navigation">
+      <a
+        *ngFor="let link of links"
+        [routerLink]="link.path"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+        ariaCurrentWhenActive="page"
+      >
+        <app-icon [name]="link.icon"></app-icon><span>{{ link.label }}</span>
+      </a>
+    </nav>
+    <div class="sidebar-note">
+      <app-icon name="leaf"></app-icon>
+      <p>
+        Make room for grace.<br /><span>Start small. Come as you are.</span>
+      </p>
+    </div>
+    <a
+      class="parish-link"
+      href="https://masstimes.org/"
+      target="_blank"
+      rel="noopener noreferrer"
+      ><app-icon name="church"></app-icon> Find a Mass
+      <span aria-hidden="true">↗</span></a
+    >
+  </aside>
+  <div class="workspace">
+    <header class="topbar">
+      <span>Your daily space for faith</span
+      ><span class="today-date"
+        ><span class="date-dot"></span>{{ today | date: "EEEE, MMMM d" }}</span
+      >
+    </header>
+    <main id="main-content" tabindex="-1" #mainContent><router-outlet></router-outlet></main>
+    <footer>
+      Faith for the everyday.<span>Catholic Companion · Made with care</span>
+    </footer>
+  </div>
+</div>
+

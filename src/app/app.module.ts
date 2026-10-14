@@ -20,12 +20,14 @@ import { SelectedSinsComponent } from './components/confession/selectedSins/sele
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { LiturgicalDateComponent } from './components/liturgicalDate/liturgicalDate.component';
 import { DailyReadingsComponent } from './components/daily-readings/daily-readings.component';
-
+import { IconComponent } from './components/icon/icon.component';
+import { PrayerComponent } from './components/prayer/prayer.component';
+import { IntentionsComponent } from './components/intentions/intentions.component';
 
 @NgModule({
   providers: [
     DailyReflectionsService,
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
   declarations: [
     AppComponent,
@@ -35,7 +37,10 @@ import { DailyReadingsComponent } from './components/daily-readings/daily-readin
     SelectedSinsComponent,
     LiturgicalDateComponent,
     ConfessionComponent,
-    DailyReadingsComponent
+    DailyReadingsComponent,
+    IconComponent,
+    PrayerComponent,
+    IntentionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,8 +51,8 @@ import { DailyReadingsComponent } from './components/daily-readings/daily-readin
     EffectsModule.forRoot([DailyReflectionsEffects]),
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

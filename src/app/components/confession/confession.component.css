@@ -1,110 +1,157 @@
-.container {
+.confession-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 285px;
+  gap: 24px;
+}
+.privacy {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Align content to the top */
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.privacy app-icon {
+  margin-top: 3px;
+}
+.privacy p {
+  color: var(--green);
+  font-size: 12px;
+  margin: 5px 0 0;
+}
+.privacy strong {
+  font-size: 13px;
+}
+.personal-items > p:not(.eyebrow) {
+  font-size: 13px;
+}
+.custom-footer {
+  display: flex;
   align-items: center;
-  min-height: 100vh;
-  background-color: rgb(79, 85, 88);
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
+  justify-content: space-between;
+  margin-top: 12px;
+  gap: 10px;
+}
+.custom-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+.custom-list li {
+  border-top: 1px solid var(--line);
+  padding: 15px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.custom-list li > span {
+  flex: 1;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.custom-list li > div {
+  display: flex;
+}
+.search-input {
   width: 100%;
-  z-index: -1;
+  margin-bottom: 20px;
 }
-
-.header {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Align content to the top */
-  align-items: center;
-  text-align: center;
-  margin-top: 100px; /* Remove any margin from the top */
-  color: black;
+.group {
+  padding: 0;
+  margin-bottom: 12px;
 }
-
-.header label { 
-  color: rgb(10, 1, 1);
-  font-weight: bold;
-  font-size: 20px;
-  margin-bottom: 10px; /* Space between label and h1 */
-}
-
-.header h1 { 
-  font-family: 'Cinzel', serif;
-  color: #ffffff;
-  font-size: 45px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-  margin: 0; /* Remove any default margin */
-}
-
-.home-link {
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 10px;
-  color: rgb(11, 0, 0);
-  font-size: 25px; /* Larger font size */
-  font-weight: bold; /* Bolder font weight */
-  text-decoration: none;
-  transition: color 0.3s; /* Smooth color transition */
-}
-
-.home-link:hover {
-  color: blue;
-}
-.sins-list {
-  margin-top: 50px; /* Adjust as needed */
-}
-.sins-list label {
-  font-size: 20px;
-  font-weight: bold;
-  display: block;
-  margin-bottom: 10px; /* Adjust as needed */
-}
-
-.sins-list-container {
-  overflow-y: auto; /* Enable vertical scrolling */
-  max-height: 500px; /* Adjust as needed */
-}
-
-button {
-  background-color: white; 
-  border: none;
-  color: rgb(7, 7, 7);
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+.group summary {
   cursor: pointer;
-  border-radius: 12px;
-  transition-duration: 0.4s;
+  padding: 19px;
+  font-size: 15px;
+  font-weight: 500;
 }
-
-button:hover {
-  background-color: #323632;
+.group summary > span {
+  float: right;
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 400;
+  margin-top: 3px;
 }
-
-input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  background:white;
-  border-radius: 5px;
-  border: 2px solid #555;
+.prompts {
+  padding: 0 20px 16px;
 }
-
-input[type="checkbox"]:checked {
-  background: #abd;
+.prompts label {
+  display: flex;
+  gap: 14px;
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  align-items: flex-start;
+  cursor: pointer;
 }
-
-input[type=number], select {
-  border-radius: 5px; /* Adjust as needed */
+.prompts input {
+  flex-shrink: 0;
+  margin-top: 2px;
 }
-
+.summary-card {
+  height: fit-content;
+  position: sticky;
+  top: 25px;
+  background: #eef0e5;
+}
+.summary-card > p {
+  font-size: 12px;
+}
+.summary-card .eyebrow {
+  font-size: 9px;
+}
+.summary-card > .button {
+  width: 100%;
+  margin: 15px 0;
+}
+.confession-time {
+  display: flex;
+  gap: 8px;
+}
+.confession-time input {
+  width: 80px;
+  min-width: 0;
+}
+.confession-time select {
+  flex: 1;
+  min-width: 0;
+}
+.summary-count {
+  border-top: 1px solid var(--line);
+  margin-top: 25px;
+  padding-top: 18px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.summary-count span {
+  font-family: Georgia, serif;
+  font-size: 30px;
+  color: var(--green);
+  margin-right: 8px;
+}
+.summary-card .text-link {
+  font-size: 10px;
+}
+@media (max-width: 1050px) {
+  .confession-layout {
+    grid-template-columns: 1fr;
+  }
+  .summary-card {
+    position: static;
+  }
+  .confession-time {
+    max-width: 300px;
+  }
+}
+@media (max-width: 760px) {
+  .custom-list li {
+    flex-wrap: wrap;
+  }
+  .custom-list li > span {
+    min-width: 100%;
+  }
+  .group summary > span {
+    display: none;
+  }
+  .custom-footer {
+    flex-wrap: wrap;
+  }
+}

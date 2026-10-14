@@ -1,46 +1,45 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, catchError, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { map, switchMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { DailyReflectionsService } from './daily-relflections.service';
-import { GetDailyUpdates, GetDailyUpdatesFailure, GetDailyUpdatesSuccess, GetReadings, GetReadingsFailure, GetReadingsSuccess } from './daily-relflections.actions';
-import { Action } from '@ngrx/store';
+import {
+  GetDailyUpdates,
+  GetDailyUpdatesFailure,
+  GetDailyUpdatesSuccess,
+  GetReadings,
+  GetReadingsFailure,
+  GetReadingsSuccess,
+} from './daily-relflections.actions';
 
 @Injectable()
 export class DailyReflectionsEffects {
-  liturgicalDate$: Observable<Action> = createEffect(() =>
+  liturgicalDate$ = createEffect(() =>
     this.actions$.pipe(
       ofType(GetDailyUpdates),
-      mergeMap(action =>
+      switchMap((action) =>
         this.dailyReflectionsService.liturgicalCalendar(action.request).pipe(
-          tap(response => console.log('API response:', response)),
-          map(response => GetDailyUpdatesSuccess({ response })),
-          catchError((error) => of(GetDailyUpdatesFailure({ error })))
-        )
-      )
-    )
+          map((response) => GetDailyUpdatesSuccess({ response })),
+          catchError((error) => of(GetDailyUpdatesFailure({ error }))),
+        ),
+      ),
+    ),
   );
 
-  dailyReadings$: Observable<Action> = createEffect(() =>
+  dailyReadings$ = createEffect(() =>
     this.actions$.pipe(
       ofType(GetReadings),
-      mergeMap(action =>
+      switchMap((action) =>
         this.dailyReflectionsService.dailyReadings(action.request).pipe(
-          tap(response => {
-            console.log('API response:', response);
-            if (response) {
-              console.log('Response is returned from the API');
-            } else {
-              console.log('No response is returned from the API');
-            }
-          }),
-          map(response => GetReadingsSuccess({ response })),
-          catchError((error) => of(GetReadingsFailure({ error })))
-        )
-      )
-    )
+          map((response) => GetReadingsSuccess({ response })),
+          catchError((error) => of(GetReadingsFailure({ error }))),
+        ),
+      ),
+    ),
   );
-  
 
-  constructor(private actions$: Actions, private dailyReflectionsService: DailyReflectionsService) {}
+  constructor(
+    private actions$: Actions,
+    private dailyReflectionsService: DailyReflectionsService,
+  ) {}
 }

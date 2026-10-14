@@ -1,27 +1,56 @@
-# Apm
+# Catholic Companion UI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.3.
+A daily Catholic companion built with Angular 14, NgRx, and a .NET 8 API in the sibling `CatholicCompanionApi` repository.
 
-## Development server
+## Run locally
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Use Node 16.20.2 for this existing Angular 14 workspace (`.nvmrc` is included). With nvm-windows: `nvm install 16.20.2`, then `nvm use 16.20.2`.
 
-## Code scaffolding
+Start the API in a separate terminal:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```powershell
+cd C:\Repos\CatholicCompanionApi
+dotnet restore --configfile NuGet.Config
+dotnet run --launch-profile http
+```
 
-## Build
+Start the UI:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```powershell
+cd C:\Repos\CatholicCompanion
+npm ci
+npm start
+```
 
-## Running unit tests
+Open http://127.0.0.1:4200. The UI proxies `/api` to http://localhost:5067 using `proxy.conf.json`. No development HTTPS certificate is required. Production continues to use the existing Azure API URL. Stop either terminal with Ctrl+C.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+For the initial local setup, a compatible portable Node runtime is also available at `C:\Repos\.tmp\node16\node-v16.20.2-win-x64\node.exe`. You can invoke the Angular CLI directly with that executable and `node_modules/@angular/cli/bin/ng.js`.
 
-## Running end-to-end tests
+## Features
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Today dashboard with a daily prayer, reading, and charity rhythm. Progress resets by the browser's local calendar date.
+- Live USCCB Mass readings with date navigation, source links, and loading/error/retry states.
+- Seven-day US liturgical calendar, keeping dates aligned when upstream data is unavailable.
+- Guided Rosary with all four mystery sets, introductory and concluding prayers, and a bead-by-bead guide. Weekday suggestions can be changed; Sunday customs may vary with the season.
+- Quiet prayer timer with pause, resume, reset, and completion feedback.
+- Intention notebook with prayer/gratitude views. Saving on this browser is optional and can be disabled.
+- Searchable examination of conscience using the existing prompts, plus optional personal sins or notes with add, edit, and remove controls.
+- Confession review guide and a clear-all action. Confession items are held only in memory and disappear on reload.
+- Shared responsive navigation, keyboard focus indicators, labelled inputs, and reduced-motion support.
 
-## Further help
+## Privacy and sources
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Confession selections and personal items never enter localStorage or the API. Intentions are only saved when the user enables browser saving. Browser storage is not encrypted and is visible to other users of the same browser profile. There are no accounts, cloud sync, AI spiritual advice, or background notifications.
+
+Readings and calendar celebrations come from USCCB. Rosary guidance links to https://www.usccb.org/how-to-pray-the-rosary. The Mass finder opens https://masstimes.org; this app does not invent parish schedules. External sources and Google Fonts require network access; typography has local fallbacks. Existing examination prompts are preserved as reflection aids, without assigning an automatic classification to a person's actions.
+
+## Validate
+
+```powershell
+npm run build
+npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+```
+
+Tests use the existing Jasmine/Karma conventions and cover personal confession items, storage choices, daily progress, reading states, Rosary structure, and timer lifecycle. Production component CSS budgets allow 4 KB before warning and 6 KB before failure; the initial bundle budgets remain unchanged.
+
+The framework versions have been preserved. A supported-framework upgrade should be planned separately from this UI and behavior refactor.
