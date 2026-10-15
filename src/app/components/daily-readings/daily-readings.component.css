@@ -3,6 +3,24 @@
   grid-template-columns: minmax(0, 1fr) 260px;
   gap: 24px;
 }
+.reading-date-picker {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--green);
+  font-size: 14px;
+}
+.reading-date-picker input {
+  width: auto;
+  max-width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--green);
+  font: inherit;
+}
 .reading-card {
   margin-bottom: 18px;
   padding: 32px;

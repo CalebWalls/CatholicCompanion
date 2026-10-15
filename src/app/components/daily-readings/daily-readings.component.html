@@ -8,6 +8,18 @@
   <time>{{ date | date: "EEEE, MMMM d, y" }}</time>
   <button (click)="changeDate(1)" aria-label="Next day">→</button>
   <button (click)="today()">Today</button>
+  <label class="reading-date-picker" for="reading-date">
+    Choose a date
+    <input
+      #readingDate
+      id="reading-date"
+      type="date"
+      min="1900-01-01"
+      max="2100-12-31"
+      [value]="selectedDate"
+      (change)="selectDate(readingDate.value)"
+    />
+  </label>
 </div>
 <div class="readings-layout" *ngIf="state$ | async as state">
   <section aria-label="Daily Mass readings" aria-live="polite">
@@ -92,6 +104,9 @@
         <p class="muted" *ngIf="set.sections.length">
           Showing the readings published by USCCB. Where the source gives a
           selection, other approved readings may also be used.
+        </p>
+        <p class="muted reading-copyright" *ngIf="set.copyright">
+          {{ set.copyright }}
         </p>
       </ng-container>
       <ng-template #legacyReadings>

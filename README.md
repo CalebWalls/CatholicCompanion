@@ -29,7 +29,7 @@ For the initial local setup, a compatible portable Node runtime is also availabl
 ## Features
 
 - Today dashboard with a daily prayer, reading, and charity rhythm. Progress resets by the browser's local calendar date.
-- Live USCCB Mass readings with date navigation, source links, and loading/error/retry states. In-app choices support alternate readings and linked Mass sets (such as Christmas vigil, night, dawn, and day). Extra Easter Vigil readings, psalms, and sequences stay in source order. Source selection notes remain visible; only published readings are shown.
+- Live USCCB Mass readings with previous/next/today navigation, a calendar date picker, source links, and loading/error/retry states. Selected dates stay in the URL for refreshes and sharing. Rapid navigation waits 250 ms before fetching the final selected day to reduce unnecessary source requests. In-app choices support alternate readings and linked Mass sets (such as Christmas vigil, night, dawn, and day). Extra Easter Vigil readings, psalms, and sequences stay in source order. Source selection notes remain visible; only published readings are shown.
 - Seven-day US liturgical calendar, keeping dates aligned when upstream data is unavailable.
 - Automatic saint-of-the-day card on the home page, sourced from Vatican News. Loads the browser's current date and checks for a new local day every minute while mounted, with loading and retry states. Supports multiple saints and entries without biographies; Vatican News commemorations may differ from the local liturgical calendar.
 - Guided Rosary with all four mystery sets, introductory and concluding prayers, and a bead-by-bead guide. Weekday suggestions can be changed; Sunday customs may vary with the season.
@@ -44,6 +44,8 @@ For the initial local setup, a compatible portable Node runtime is also availabl
 Confession selections and personal items never enter localStorage or the API. Intentions are only saved when the user enables browser saving. Browser storage is not encrypted and is visible to other users of the same browser profile. There are no accounts, cloud sync, AI spiritual advice, or background notifications.
 
 Readings and calendar celebrations come from USCCB. Rosary guidance links to https://www.usccb.org/how-to-pray-the-rosary. The Mass finder opens https://masstimes.org; this app does not invent parish schedules. External sources and Google Fonts require network access; typography has local fallbacks. Existing examination prompts are preserved as reflection aids, without assigning an automatic classification to a person's actions.
+
+The API prefers USCCB's official RSS feed for available dates and falls back to reading pages for dates outside the feed. The feed snapshot refreshes on demand every 15 minutes. RSS reading sets preserve full text, alternate readings, source links, and USCCB's copyright notice, displayed beneath the readings. Future dates and linked Mass pages still depend on USCCB website availability.
 
 ## Validate
 

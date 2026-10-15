@@ -74,6 +74,28 @@ describe('Daily readings date navigation', () => {
     }
   });
 
+  it('navigates directly to a selected future date without a timezone shift', () => {
+    component.selectDate('2027-04-04');
+    expect(router.navigate).toHaveBeenCalledWith([], {
+      relativeTo: route,
+      queryParams: { date: '2027-04-04' },
+      queryParamsHandling: 'merge',
+    });
+    params.next(convertToParamMap({ date: '2027-04-04' }));
+    expect(component.selectedDate).toBe('2027-04-04');
+    expect(store.dispatch).toHaveBeenCalledWith(
+      GetReadings({ request: { date: '2027-04-04' } }),
+    );
+  });
+
+  it('ignores cleared, invalid, or unsupported picker dates', () => {
+    for (const date of ['', '2027-02-30', '2101-01-01']) {
+      component.selectDate(date);
+    }
+    expect(router.navigate).not.toHaveBeenCalled();
+    expect(component.selectedDate).toBe('2026-11-01');
+  });
+
   it('stops loading dates after leaving the page', () => {
     component.ngOnDestroy();
     store.dispatch.calls.reset();
@@ -93,6 +115,7 @@ describe('Daily readings choices', () => {
           {
             title: 'Vigil Mass',
             url: 'https://example.com/vigil',
+            copyright: '© USCCB test attribution',
             sections: [
               {
                 key: 'gospelReading',
@@ -131,12 +154,41 @@ describe('Daily readings choices', () => {
     }).compileComponents();
   });
 
+  it('offers an accessible calendar input and navigates when a date is selected', async () => {
+    const fixture = TestBed.createComponent(DailyReadingsComponent);
+    const router = TestBed.inject(Router);
+    const navigate = spyOn(router, 'navigate').and.returnValue(
+      Promise.resolve(true),
+    );
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const page: HTMLElement = fixture.nativeElement;
+    const picker = page.querySelector('#reading-date') as HTMLInputElement;
+    expect(picker.type).toBe('date');
+    expect(
+      page.querySelector('label[for="reading-date"]')?.textContent,
+    ).toContain('Choose a date');
+    expect(picker.value).toBe(fixture.componentInstance.selectedDate);
+    picker.value = '2027-04-04';
+    picker.dispatchEvent(new Event('change'));
+    expect(navigate).toHaveBeenCalledWith(
+      [],
+      jasmine.objectContaining({
+        queryParams: { date: '2027-04-04' },
+      }),
+    );
+    fixture.destroy();
+  });
+
   it('renders and switches alternate readings and Masses without leaving the page', async () => {
     const fixture = TestBed.createComponent(DailyReadingsComponent);
     fixture.detectChanges();
     await fixture.whenStable();
     const page: HTMLElement = fixture.nativeElement;
     expect(page.textContent).toContain('Long gospel');
+    expect(page.querySelector('.reading-copyright')?.textContent).toContain(
+      '© USCCB test attribution',
+    );
     expect(page.textContent).not.toContain('Short gospel');
     const options = page.querySelector(
       '#reading-option-0',

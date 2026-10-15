@@ -63,6 +63,17 @@ export class DailyReadingsComponent implements OnInit, OnDestroy {
     this.navigateToDate(new Date());
   }
 
+  get selectedDate(): string {
+    return localDateKey(this.date);
+  }
+
+  selectDate(value: string): void {
+    const date = this.dateFromUrl(value);
+    if (localDateKey(date) === value) {
+      this.navigateToDate(date);
+    }
+  }
+
   private navigateToDate(date: Date): void {
     this.router.navigate([], {
       relativeTo: this.route,

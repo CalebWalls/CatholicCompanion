@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, switchMap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, timer } from 'rxjs';
 import { DailyReflectionsService } from './daily-relflections.service';
 import {
   GetDailyUpdates,
@@ -30,9 +30,13 @@ export class DailyReflectionsEffects {
     this.actions$.pipe(
       ofType(GetReadings),
       switchMap((action) =>
-        this.dailyReflectionsService.dailyReadings(action.request).pipe(
-          map((response) => GetReadingsSuccess({ response })),
-          catchError((error) => of(GetReadingsFailure({ error }))),
+        timer(250).pipe(
+          switchMap(() =>
+            this.dailyReflectionsService.dailyReadings(action.request).pipe(
+              map((response) => GetReadingsSuccess({ response })),
+              catchError((error) => of(GetReadingsFailure({ error }))),
+            ),
+          ),
         ),
       ),
     ),
