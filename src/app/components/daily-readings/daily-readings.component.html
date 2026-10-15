@@ -105,6 +105,9 @@
           Showing the readings published by USCCB. Where the source gives a
           selection, other approved readings may also be used.
         </p>
+        <p class="muted reading-copyright" *ngIf="set.copyright">
+          {{ set.copyright }}
+        </p>
       </ng-container>
       <ng-template #legacyReadings>
         <ng-container *ngFor="let section of sections">

@@ -45,6 +45,8 @@ Confession selections and personal items never enter localStorage or the API. In
 
 Readings and calendar celebrations come from USCCB. Rosary guidance links to https://www.usccb.org/how-to-pray-the-rosary. The Mass finder opens https://masstimes.org; this app does not invent parish schedules. External sources and Google Fonts require network access; typography has local fallbacks. Existing examination prompts are preserved as reflection aids, without assigning an automatic classification to a person's actions.
 
+The API prefers USCCB's official RSS feed for available dates and falls back to reading pages for dates outside the feed. The feed snapshot refreshes on demand every 15 minutes. RSS reading sets preserve full text, alternate readings, source links, and USCCB's copyright notice, displayed beneath the readings. Future dates and linked Mass pages still depend on USCCB website availability.
+
 ## Validate
 
 ```powershell

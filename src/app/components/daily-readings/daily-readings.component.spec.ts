@@ -115,6 +115,7 @@ describe('Daily readings choices', () => {
           {
             title: 'Vigil Mass',
             url: 'https://example.com/vigil',
+            copyright: '© USCCB test attribution',
             sections: [
               {
                 key: 'gospelReading',
@@ -185,6 +186,9 @@ describe('Daily readings choices', () => {
     await fixture.whenStable();
     const page: HTMLElement = fixture.nativeElement;
     expect(page.textContent).toContain('Long gospel');
+    expect(page.querySelector('.reading-copyright')?.textContent).toContain(
+      '© USCCB test attribution',
+    );
     expect(page.textContent).not.toContain('Short gospel');
     const options = page.querySelector(
       '#reading-option-0',

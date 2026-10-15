@@ -14,6 +14,7 @@ export interface ReadingSet {
   celebration?: string;
   lectionary?: string;
   note?: string;
+  copyright?: string;
   url: string;
   error?: string;
   sections: ReadingSection[];
