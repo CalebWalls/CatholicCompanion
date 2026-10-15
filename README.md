@@ -29,7 +29,7 @@ For the initial local setup, a compatible portable Node runtime is also availabl
 ## Features
 
 - Today dashboard with a daily prayer, reading, and charity rhythm. Progress resets by the browser's local calendar date.
-- Live USCCB Mass readings with date navigation, source links, and loading/error/retry states. In-app choices support alternate readings and linked Mass sets (such as Christmas vigil, night, dawn, and day). Extra Easter Vigil readings, psalms, and sequences stay in source order. Source selection notes remain visible; only published readings are shown.
+- Live USCCB Mass readings with previous/next/today navigation, a calendar date picker, source links, and loading/error/retry states. Selected dates stay in the URL for refreshes and sharing. Rapid navigation waits 250 ms before fetching the final selected day to reduce unnecessary source requests. In-app choices support alternate readings and linked Mass sets (such as Christmas vigil, night, dawn, and day). Extra Easter Vigil readings, psalms, and sequences stay in source order. Source selection notes remain visible; only published readings are shown.
 - Seven-day US liturgical calendar, keeping dates aligned when upstream data is unavailable.
 - Automatic saint-of-the-day card on the home page, sourced from Vatican News. Loads the browser's current date and checks for a new local day every minute while mounted, with loading and retry states. Supports multiple saints and entries without biographies; Vatican News commemorations may differ from the local liturgical calendar.
 - Guided Rosary with all four mystery sets, introductory and concluding prayers, and a bead-by-bead guide. Weekday suggestions can be changed; Sunday customs may vary with the season.
