@@ -100,6 +100,13 @@
   width: 100%;
   margin-bottom: 20px;
 }
+.examination-source,
+.category-description {
+  font-size: 13px;
+}
+.examination-category {
+  margin-top: 28px;
+}
 .group {
   padding: 0;
   margin-bottom: 12px;

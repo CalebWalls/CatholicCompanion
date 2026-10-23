@@ -38,28 +38,28 @@ export class ConfessionComponent {
     {
       title: 'Keeping the Lord’s Day',
       ranges: [
-        [26, 32],
+        [26, 30],
         [159, 167],
       ],
     },
     {
       title: 'Family and responsibilities',
       ranges: [
-        [32, 40],
+        [30, 38],
         [167, 191],
       ],
     },
     {
       title: 'Respect for life and our neighbor',
       ranges: [
-        [40, 63],
+        [38, 61],
         [191, 229],
       ],
     },
     {
       title: 'Faithfulness and chastity',
       ranges: [
-        [63, 90],
+        [61, 90],
         [229, 239],
       ],
     },
@@ -91,12 +91,37 @@ export class ConfessionComponent {
         [266, examinationItems.length],
       ],
     },
-  ].map((group) => ({
-    title: group.title,
-    items: group.ranges.flatMap(([start, end]) =>
-      examinationItems.slice(start, end),
-    ),
-  }));
+  ].map((group) => {
+    const [mortalStart, mortalEnd] = group.ranges[0];
+    const [venialStart, venialEnd] = group.ranges[1];
+    return {
+      title: group.title,
+      mortalItems: examinationItems.slice(mortalStart, mortalEnd),
+      venialItems: examinationItems.slice(venialStart, venialEnd),
+    };
+  });
+  categories = [
+    {
+      id: 'mortal',
+      title: 'Mortal sins',
+      description:
+        'The examination lists these as serious matter. A sin is mortal only when grave matter, full knowledge, and deliberate consent are all present together.',
+      groups: this.groups.map((group) => ({
+        title: group.title,
+        items: group.mortalItems,
+      })),
+    },
+    {
+      id: 'venial',
+      title: 'Venial sins and imperfections',
+      description:
+        'The examination groups venial sins and imperfections together. Imperfections are not sins and do not need to be confessed; the source does not distinguish them individually.',
+      groups: this.groups.map((group) => ({
+        title: group.title,
+        items: group.venialItems,
+      })),
+    },
+  ];
 
   constructor(
     private router: Router,

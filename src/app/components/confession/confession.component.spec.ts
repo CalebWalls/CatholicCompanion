@@ -67,9 +67,64 @@ describe('Confession preparation', () => {
   });
 
   it('keeps all existing prompts available exactly once', () => {
-    const all = component.groups.flatMap((group) => group.items);
+    const all = component.categories.flatMap((category) =>
+      category.groups.flatMap((group) => group.items),
+    );
     expect(all.length).toBe(examinationItems.length);
     expect([...all].sort()).toEqual([...examinationItems].sort());
+  });
+
+  it('separates the source mortal and venial sections without changing saved prompts', () => {
+    const [mortal, venial] = component.categories;
+    expect(mortal.title).toBe('Mortal sins');
+    expect(venial.title).toBe('Venial sins and imperfections');
+    expect(mortal.groups.flatMap((group) => group.items)).toEqual(
+      examinationItems.slice(0, 124),
+    );
+    expect(venial.groups.flatMap((group) => group.items)).toEqual(
+      examinationItems.slice(124),
+    );
+    component.toggle('Adultery');
+    component.toggle('Failure to pray on a daily basis');
+    expect(service.getSelectedSins()).toEqual([
+      'Adultery',
+      'Failure to pray on a daily basis',
+    ]);
+  });
+
+  it('places Sunday, family, life, and chastity prompts under the source commandments', () => {
+    const groups = component.categories[0].groups;
+    expect(groups[2].items).toEqual([
+      'Missing Mass on Sunday or a Holy Day of Obligation without a serious reason',
+      'Doing unnecessary work on Sunday for a long period of time, i.e., more than several hours',
+      'Intentional failure to fast or abstain on appointed days',
+      'Requiring employees to work on Sunday in nonessential occupations',
+    ]);
+    expect(groups[3].items[0]).toBe('Serious failure to care for aged parents');
+    expect(groups[3].items[7]).toBe(
+      'Failure to carry out the last will of deceased parents',
+    );
+    expect(groups[4].items[0]).toBe('Murder, homicide or manslaughter');
+    expect(groups[4].items[22]).toBe(
+      'Intentionally placing temptation before the weak',
+    );
+    expect(groups[5].items[0]).toBe('Adultery');
+    expect(groups[5].items[28]).toBe('Transvestitism or cross dressing');
+  });
+
+  it('searches both categories without losing selected items', () => {
+    component.toggle('Cursing thoughtlessly');
+    component.search = '  PRAYER  ';
+    const matches = component.categories.map((category) =>
+      category.groups.flatMap((group) => component.filteredItems(group.items)),
+    );
+    expect(matches[0]).toEqual([]);
+    expect(matches[1]).toContain('Being willfully distracted at Mass or in prayer');
+    expect(component.selectedSins).toEqual(['Cursing thoughtlessly']);
+    component.search = 'no such reflection prompt';
+    expect(component.filteredItems(examinationItems)).toEqual([]);
+    component.search = '';
+    expect(component.filteredItems(examinationItems)).toEqual(examinationItems);
   });
 
   it('includes custom items in review and clears all private state', () => {
